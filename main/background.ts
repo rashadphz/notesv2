@@ -14,8 +14,13 @@ if (isProd) {
   await app.whenReady();
 
   const mainWindow = createWindow("main", {
-    width: 1000,
+    width: 800,
     height: 600,
+    frame: false,
+    titleBarStyle: "hidden",
+    webPreferences: {
+      nodeIntegration: true,
+    },
   });
 
   if (isProd) {
@@ -23,7 +28,7 @@ if (isProd) {
   } else {
     const port = process.argv[2];
     await mainWindow.loadURL(`http://localhost:${port}/home`);
-    mainWindow.webContents.openDevTools();
+    // mainWindow.webContents.openDevTools();
   }
 })();
 
