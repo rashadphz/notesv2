@@ -1,5 +1,6 @@
 import { Fragment } from "react";
 import { MenuItem } from "./MenuItem";
+import { useEditor } from "../hooks/useEditor";
 
 interface MenuBarItem {
   icon: string;
@@ -8,7 +9,8 @@ interface MenuBarItem {
   isActive: () => boolean;
 }
 
-export const MenuBar = ({ editor }) => {
+export const MenuBar = () => {
+  const editor = useEditor();
   const items: MenuBarItem[] = [
     {
       icon: "bold",

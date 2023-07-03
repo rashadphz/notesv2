@@ -73,7 +73,7 @@ export const Titlebar = () => {
         </TitlebarButton>
       </div>
       <div className="flex flex-row items-center space-x-2">
-        <MenuBar editor={[]} />
+        <MenuBar />
       </div>
     </div>
   );
