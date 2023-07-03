@@ -2,6 +2,7 @@ import React from "react";
 import Head from "next/head";
 import Link from "next/link";
 import NotesEditor from "../components/Editor";
+import { Titlebar } from "../components/Titlebar";
 
 function Home() {
   return (
@@ -9,6 +10,7 @@ function Home() {
       <Head>
         <title>Home - Nextron (with-typescript-tailwindcss)</title>
       </Head>
+      <Titlebar />
       <NotesEditor />
       {/* <div className="grid grid-col-1 text-2xl w-full text-center">
         <img className="ml-auto mr-auto" src="/images/logo.png" />

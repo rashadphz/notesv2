@@ -1,6 +1,7 @@
 import { app } from "electron";
 import serve from "electron-serve";
 import { createWindow } from "./helpers";
+import { ipcMain, BrowserWindow } from "electron";
 
 const isProd: boolean = process.env.NODE_ENV === "production";
 
@@ -16,11 +17,22 @@ if (isProd) {
   const mainWindow = createWindow("main", {
     width: 800,
     height: 600,
+    autoHideMenuBar: true,
     frame: false,
-    titleBarStyle: "hidden",
-    webPreferences: {
-      nodeIntegration: true,
-    },
+  });
+
+  ipcMain.on("minimizeApp", () => {
+    mainWindow?.minimize();
+  });
+  ipcMain.on("maximizeApp", () => {
+    if (mainWindow?.isMaximized()) {
+      mainWindow?.unmaximize();
+    } else {
+      mainWindow?.maximize();
+    }
+  });
+  ipcMain.on("closeApp", () => {
+    mainWindow.close();
   });
 
   if (isProd) {

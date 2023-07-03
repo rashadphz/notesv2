@@ -13,6 +13,7 @@ import Highlight from "@tiptap/extension-highlight";
 import { ListItem } from "@tiptap/extension-list-item";
 import { Heading } from "@tiptap/extension-heading";
 import Document from "@tiptap/extension-document";
+import Typography from "@tiptap/extension-typography";
 
 export const TipTapExtensions = [
   StarterKit.configure({
@@ -44,5 +45,7 @@ export const TipTapExtensions = [
     },
   }),
   TextStyle,
+  Typography,
   Color,
+  Document,
 ];
