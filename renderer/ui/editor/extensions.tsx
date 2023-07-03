@@ -40,7 +40,7 @@ export const TipTapExtensions = [
     codeBlock: {
       HTMLAttributes: {
         class:
-          "rounded-sm bg-stone-100 p-5 font-mono font-medium text-stone-800",
+          "p-5 font-mono font-medium text-stone-800 rounded-lg bg-neutral-100 border-gray-600 border-[1px]",
       },
     },
   }),

@@ -1,6 +1,6 @@
 import React from "react";
 import type { AppProps } from "next/app";
-import { Inter } from "next/font/google";
+import { Inter, Fira_Code } from "next/font/google";
 
 import "../styles/globals.css";
 import "../styles/prosemirror.css";
@@ -14,21 +14,36 @@ export const inter = Inter({
   subsets: ["latin"],
 });
 
+export const firaCode = Fira_Code({
+  variable: "--font-mono",
+  subsets: ["latin"],
+});
+
 function MyApp({ Component, pageProps }: AppProps) {
   const editor = initEditor();
 
   return (
-    <main className={inter.className}>
-      <ThemeProvider
-        attribute="class"
-        storageKey="nightwind-mode"
-        defaultTheme="system"
-      >
-        <EditorContext.Provider value={editor}>
-          <Component {...pageProps} />
-        </EditorContext.Provider>
-      </ThemeProvider>
-    </main>
+    <>
+      <style jsx global>{`
+        html {
+          font-family: ${inter.style.fontFamily};
+        }
+        code {
+          font-family: ${firaCode.style.fontFamily};
+        }
+      `}</style>
+      <main>
+        <ThemeProvider
+          attribute="class"
+          storageKey="nightwind-mode"
+          defaultTheme="system"
+        >
+          <EditorContext.Provider value={editor}>
+            <Component {...pageProps} />
+          </EditorContext.Provider>
+        </ThemeProvider>
+      </main>
+    </>
   );
 }
 
