@@ -5,6 +5,9 @@ import { Inter } from "next/font/google";
 import "../styles/globals.css";
 import "../styles/prosemirror.css";
 import "remixicon/fonts/remixicon.css";
+import EditorContext from "../EditorContext";
+import { Editor } from "@tiptap/react";
+import { initEditor } from "../components/Editor";
 
 export const inter = Inter({
   variable: "--font-default",
@@ -12,9 +15,12 @@ export const inter = Inter({
 });
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const editor = initEditor();
   return (
     <main className={inter.className}>
-      <Component {...pageProps} />
+      <EditorContext.Provider value={editor}>
+        <Component {...pageProps} />
+      </EditorContext.Provider>
     </main>
   );
 }

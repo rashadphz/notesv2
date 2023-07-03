@@ -1,6 +1,6 @@
-import { Fragment } from "react";
+import { Fragment, useContext } from "react";
 import { MenuItem } from "./MenuItem";
-import { useEditor } from "../hooks/useEditor";
+import EditorContext from "../EditorContext";
 
 interface MenuBarItem {
   icon: string;
@@ -10,7 +10,8 @@ interface MenuBarItem {
 }
 
 export const MenuBar = () => {
-  const editor = useEditor();
+  const editor = useContext(EditorContext);
+
   const items: MenuBarItem[] = [
     {
       icon: "bold",
