@@ -26,6 +26,7 @@
     "@tiptap/starter-kit": "^2.0.3",
     "electron-serve": "^1.1.0",
     "electron-store": "^8.1.0",
+    "remixicon": "^3.4.0",
     "tiptap-markdown": "^0.8.1"
   },
   "devDependencies": {

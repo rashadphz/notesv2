@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { ipcRenderer } from "electron";
+import { MenuBar } from "./Menubar";
 
 const iconStyles = {
   width: "12px",
@@ -59,7 +60,7 @@ const TitlebarButton = ({
 
 export const Titlebar = () => {
   return (
-    <div className="flex flex-row justify-between items-center w-full h-8">
+    <div className="flex flex-row items-center w-full h-[55px]">
       <div className="px-3 flex flex-row items-center space-x-2">
         <TitlebarButton message="closeApp">
           <CloseIcon />
@@ -70,6 +71,9 @@ export const Titlebar = () => {
         <TitlebarButton message="maximizeApp">
           <MaximizeIcon />
         </TitlebarButton>
+      </div>
+      <div className="flex flex-row items-center space-x-2">
+        <MenuBar editor={[]} />
       </div>
     </div>
   );

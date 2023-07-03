@@ -46,6 +46,9 @@ dependencies:
   electron-store:
     specifier: ^8.1.0
     version: 8.1.0
+  remixicon:
+    specifier: ^3.4.0
+    version: 3.4.0
   tiptap-markdown:
     specifier: ^0.8.1
     version: 0.8.1(@tiptap/core@2.0.3)
@@ -4735,6 +4738,10 @@ packages:
     dependencies:
       jsesc: 0.5.0
     dev: true
+
+  /remixicon@3.4.0:
+    resolution: {integrity: sha512-T1tJfMVNbmUIYdsrCJ//FOoQ/xgiWPuE3ZZvUeDRl5h/IZWKN2eTcKeUoro1g5aeJ/Rk1mZV6QPdF8qZxIu+3A==}
+    dev: false
 
   /require-directory@2.1.1:
     resolution: {integrity: sha512-fGxEI7+wsG9xrvdjsrlmL22OMTTiHRwAMroiEeMgq8gzoLC/PQr7RsRDSTLUg/bZAZtF+TVIkHc6/4RIKrui+Q==}

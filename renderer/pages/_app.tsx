@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 
 import "../styles/globals.css";
 import "../styles/prosemirror.css";
+import "remixicon/fonts/remixicon.css";
 
 export const inter = Inter({
   variable: "--font-default",
