@@ -44,7 +44,7 @@ export const initEditor = () => {
 const NotesEditor = () => {
   const editor = useContext(EditorContext);
   return (
-    <div className="relative min-h-[500px] w-full p-12 px-8 sm:pb-[calc(20vh)] sm:rounded-lg sm:px-12 sm:shadow-lg">
+    <div className="pb-20 relative w-full p-12 px-8 sm:px-12">
       <EditorContent editor={editor} />
     </div>
   );

@@ -17,8 +17,11 @@ if (isProd) {
   const mainWindow = createWindow("main", {
     width: 800,
     height: 600,
-    autoHideMenuBar: true,
-    frame: false,
+    titleBarStyle: "hidden",
+    trafficLightPosition: {
+      x: 20,
+      y: 20,
+    },
   });
 
   ipcMain.on("minimizeApp", () => {

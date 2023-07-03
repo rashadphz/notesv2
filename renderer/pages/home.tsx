@@ -7,14 +7,16 @@ import nightwind from "nightwind/helper";
 
 function Home() {
   return (
-    <div className="bg-white">
+    <div className="bg-white h-screen">
       <Head>
         <script
           dangerouslySetInnerHTML={{ __html: nightwind.init() }}
         />
       </Head>
       <Titlebar />
-      <NotesEditor />
+      <div className="main-content">
+        <NotesEditor />
+      </div>
     </div>
   );
 }
