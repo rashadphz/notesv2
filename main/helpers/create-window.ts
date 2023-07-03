@@ -5,6 +5,8 @@ import {
 } from "electron";
 import Store from "electron-store";
 
+import { globalShortcut } from "electron";
+
 export default (
   windowName: string,
   options: BrowserWindowConstructorOptions
@@ -82,6 +84,31 @@ export default (
   win = new BrowserWindow(browserOptions);
 
   win.on("close", saveState);
+  win.on("focus", () => {
+    globalShortcut.register("CommandOrControl+0", () => {
+      return;
+    });
+    globalShortcut.register("CommandOrControl+plus", () => {
+      return;
+    });
+    globalShortcut.register("CommandOrControl+=", () => {
+      return;
+    });
+    globalShortcut.register("CommandOrControl+-", () => {
+      return;
+    });
+    globalShortcut.register("CommandOrControl+_", () => {
+      return;
+    });
+  });
+
+  win.on("blur", () => {
+    globalShortcut.unregister("CommandOrControl+0");
+    globalShortcut.unregister("CommandOrControl+plus");
+    globalShortcut.unregister("CommandOrControl+=");
+    globalShortcut.unregister("CommandOrControl+-");
+    globalShortcut.unregister("CommandOrControl+_");
+  });
 
   return win;
 };
