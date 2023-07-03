@@ -60,20 +60,22 @@ const TitlebarButton = ({
 
 export const Titlebar = () => {
   return (
-    <div className="flex flex-row items-center w-full h-[55px]">
-      <div className="px-3 flex flex-row items-center space-x-2">
-        <TitlebarButton message="closeApp">
-          <CloseIcon />
-        </TitlebarButton>
-        <TitlebarButton message="minimizeApp">
-          <MinimizeIcon />
-        </TitlebarButton>
-        <TitlebarButton message="maximizeApp">
-          <MaximizeIcon />
-        </TitlebarButton>
-      </div>
-      <div className="flex flex-row items-center space-x-2">
-        <MenuBar />
+    <div className="titlebar">
+      <div className="flex flex-row items-center w-full h-[55px]">
+        <div className="px-3 flex flex-row items-center space-x-2">
+          <TitlebarButton message="closeApp">
+            <CloseIcon />
+          </TitlebarButton>
+          <TitlebarButton message="minimizeApp">
+            <MinimizeIcon />
+          </TitlebarButton>
+          <TitlebarButton message="maximizeApp">
+            <MaximizeIcon />
+          </TitlebarButton>
+        </div>
+        <div className="flex flex-row items-center space-x-2">
+          <MenuBar />
+        </div>
       </div>
     </div>
   );
