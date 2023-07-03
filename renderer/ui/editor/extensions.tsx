@@ -63,9 +63,8 @@ export const TipTapExtensions = [
   }),
   TextStyle,
   Typography,
-  Color,
-  Document,
   SlashCommand,
+  Color,
   CodeBlockLowlight.extend({
     addNodeView() {
       return ReactNodeViewRenderer(CodeBlockNode);
