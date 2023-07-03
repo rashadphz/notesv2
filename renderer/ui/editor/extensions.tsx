@@ -28,6 +28,7 @@ import rust from "highlight.js/lib/languages/rust";
 
 import { ReactNodeViewRenderer } from "@tiptap/react";
 import CodeBlockNode from "./nodes/CodeBlockNode";
+import SlashCommand from "./extensions/slash";
 
 lowlight.registerLanguage("css", css);
 lowlight.registerLanguage("js", js);
@@ -64,6 +65,7 @@ export const TipTapExtensions = [
   Typography,
   Color,
   Document,
+  SlashCommand,
   CodeBlockLowlight.extend({
     addNodeView() {
       return ReactNodeViewRenderer(CodeBlockNode);

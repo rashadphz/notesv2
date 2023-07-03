@@ -46,6 +46,9 @@ dependencies:
   '@tiptap/starter-kit':
     specifier: ^2.0.3
     version: 2.0.3(@tiptap/pm@2.0.3)
+  '@tiptap/suggestion':
+    specifier: ^2.0.3
+    version: 2.0.3(@tiptap/core@2.0.3)(@tiptap/pm@2.0.3)
   '@types/react-helmet':
     specifier: ^6.1.6
     version: 6.1.6
@@ -61,6 +64,9 @@ dependencies:
   lowlight:
     specifier: ^2.9.0
     version: 2.9.0
+  lucide-react:
+    specifier: ^0.258.0
+    version: 0.258.0(react@18.2.0)
   next-redux-wrapper:
     specifier: ^8.1.0
     version: 8.1.0(next@13.4.7)(react-redux@8.1.1)(react@18.2.0)
@@ -88,6 +94,12 @@ dependencies:
   remixicon:
     specifier: ^3.4.0
     version: 3.4.0
+  tippy:
+    specifier: ^0.0.0
+    version: 0.0.0
+  tippy.js:
+    specifier: 6.2.5
+    version: 6.2.5
   tiptap-markdown:
     specifier: ^0.8.1
     version: 0.8.1(@tiptap/core@2.0.3)
@@ -113,7 +125,7 @@ devDependencies:
     version: 23.6.0
   next:
     specifier: ^13.4.7
-    version: 13.4.7(@babel/core@7.20.12)(react-dom@18.2.0)(react@18.2.0)(sass@1.63.6)
+    version: 13.4.7(@babel/core@7.20.12)(react-dom@18.2.0)(react@18.2.0)
   nextron:
     specifier: ^8.5.0
     version: 8.5.0
@@ -135,9 +147,6 @@ devDependencies:
   react-dom:
     specifier: ^18.2.0
     version: 18.2.0(react@18.2.0)
-  sass:
-    specifier: ^1.63.6
-    version: 1.63.6
   tailwindcss:
     specifier: ^3.1.8
     version: 3.1.8(postcss@8.4.13)
@@ -2028,6 +2037,16 @@ packages:
       - '@tiptap/pm'
     dev: false
 
+  /@tiptap/suggestion@2.0.3(@tiptap/core@2.0.3)(@tiptap/pm@2.0.3):
+    resolution: {integrity: sha512-1y3palQStGZq13UtHjouZ50k4sotM+N56cIlFeygIv3gqdai2zGPaPQtqV9FOVVQizXpUbQMTlPSDC5Ej4SPnQ==}
+    peerDependencies:
+      '@tiptap/core': ^2.0.0
+      '@tiptap/pm': ^2.0.0
+    dependencies:
+      '@tiptap/core': 2.0.3(@tiptap/pm@2.0.3)
+      '@tiptap/pm': 2.0.3(@tiptap/core@2.0.3)
+    dev: false
+
   /@tootallnate/once@2.0.0:
     resolution: {integrity: sha512-XCuKFP5PS55gnMVu3dty8KPatLqUoy/ZYzDzAGCQ8JNFCkLXzmI7vNHCR+XpbZaMWQK/vQubr7PkYq8g470J/A==}
     engines: {node: '>= 10'}
@@ -3711,9 +3730,6 @@ packages:
     resolution: {integrity: sha512-bc4NBHqOqSfRW7POMkHd51LvClaeMXpm8dx0e8oE2GORbq5aRK7Bxl4FyzVLdGtLmvLKL7BTDBG5ACQm4HWjTA==}
     dev: false
 
-  /immutable@4.3.0:
-    resolution: {integrity: sha512-0AOCmOip+xgJwEVTQj1EfiDDOkPmuyllDuTuEX+DDXUgapLAsBIfkg3sxCYyCEA8mQqZrrxPUGjcOQ2JS3WLkg==}
-
   /inflight@1.0.6:
     resolution: {integrity: sha512-k92I/b08q4wvFscXCLvqfsHCrjrF7yiXsQuIVvVE7N82W3+aqpzuUdBbfhWcy/FZR3/4IgflMgKLOsvPDrGCJA==}
     dependencies:
@@ -3997,6 +4013,14 @@ packages:
     dependencies:
       yallist: 4.0.0
 
+  /lucide-react@0.258.0(react@18.2.0):
+    resolution: {integrity: sha512-3evnpKadBrjLr2HHJ66eDZ1y0vPS6pm8NiNDaLqhddUUyJGnA+lfDPZfbVkuAFq7Xaa1TEy7Sg17sM7mHpMKrA==}
+    peerDependencies:
+      react: ^16.5.1 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
+    dev: false
+
   /make-dir@3.1.0:
     resolution: {integrity: sha512-g3FeP20LNwhALb/6Cz6Dd4F2ngze0jz7tbzrD2wAV+o9FeNHe4rL+yK2md0J/fiSf1sa1ADhXqi5+oVwOM/eGw==}
     engines: {node: '>=8'}
@@ -4153,7 +4177,7 @@ packages:
       react: '*'
       react-redux: '*'
     dependencies:
-      next: 13.4.7(@babel/core@7.20.12)(react-dom@18.2.0)(react@18.2.0)(sass@1.63.6)
+      next: 13.4.7(@babel/core@7.20.12)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-redux: 8.1.1(@types/react@18.0.26)(react-dom@18.2.0)(react@18.2.0)(redux@4.2.1)
     dev: false
@@ -4165,12 +4189,12 @@ packages:
       react: '*'
       react-dom: '*'
     dependencies:
-      next: 13.4.7(@babel/core@7.20.12)(react-dom@18.2.0)(react@18.2.0)(sass@1.63.6)
+      next: 13.4.7(@babel/core@7.20.12)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /next@13.4.7(@babel/core@7.20.12)(react-dom@18.2.0)(react@18.2.0)(sass@1.63.6):
+  /next@13.4.7(@babel/core@7.20.12)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-M8z3k9VmG51SRT6v5uDKdJXcAqLzP3C+vaKfLIAM0Mhx1um1G7MDnO63+m52qPdZfrTFzMZNzfsgvm3ghuVHIQ==}
     engines: {node: '>=16.8.0'}
     hasBin: true
@@ -4195,7 +4219,6 @@ packages:
       postcss: 8.4.14
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-      sass: 1.63.6
       styled-jsx: 5.1.1(@babel/core@7.20.12)(react@18.2.0)
       watchpack: 2.4.0
       zod: 3.21.4
@@ -5014,15 +5037,6 @@ packages:
       truncate-utf8-bytes: 1.0.2
     dev: true
 
-  /sass@1.63.6:
-    resolution: {integrity: sha512-MJuxGMHzaOW7ipp+1KdELtqKbfAWbH7OLIdoSMnVe3EXPMTmxTmlaZDCTsgIpPCs3w99lLo9/zDKkOrJuT5byw==}
-    engines: {node: '>=14.0.0'}
-    hasBin: true
-    dependencies:
-      chokidar: 3.5.3
-      immutable: 4.3.0
-      source-map-js: 1.0.2
-
   /sax@1.2.4:
     resolution: {integrity: sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==}
     dev: true
@@ -5329,10 +5343,20 @@ packages:
     engines: {node: '>=10'}
     dev: false
 
+  /tippy.js@6.2.5:
+    resolution: {integrity: sha512-UIf8G99PMXGmdWPrr36s/DjQBdfxMPwzvPUXsxs3tDFDTZ1SgvKG+Jvt6RJ+aBqYL0oe/STxh3MNkCV3IWAKmw==}
+    dependencies:
+      '@popperjs/core': 2.11.8
+    dev: false
+
   /tippy.js@6.3.7:
     resolution: {integrity: sha512-E1d3oP2emgJ9dRQZdf3Kkn0qJgI6ZLpyS5z6ZkY1DF3kaQaBsGZsndEpHwx+eC+tYM41HaSNvNtLx8tU57FzTQ==}
     dependencies:
       '@popperjs/core': 2.11.8
+    dev: false
+
+  /tippy@0.0.0:
+    resolution: {integrity: sha512-GOrE/mzoeL4t7Q2Bky+7efOZJKH3W95DZIUez+nUns37jHf8R9PEupuEx9F7HolxX+0fzzpKfas2N+LIlYHXAA==}
     dev: false
 
   /tiptap-markdown@0.8.1(@tiptap/core@2.0.3):
