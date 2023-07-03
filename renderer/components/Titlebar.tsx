@@ -60,7 +60,7 @@ const TitlebarButton = ({
 
 export const Titlebar = () => {
   return (
-    <div className="z-50 titlebar sticky top-0 bg-white">
+    <div className="z-50 titlebar sticky top-0 white">
       <div className="flex flex-row items-center w-full h-[55px]">
         <div className="px-3 flex flex-row items-center space-x-2">
           <TitlebarButton message="closeApp">
@@ -73,9 +73,7 @@ export const Titlebar = () => {
             <MaximizeIcon />
           </TitlebarButton>
         </div>
-        <div className="flex flex-row items-center space-x-2">
-          <MenuBar />
-        </div>
+        <MenuBar />
       </div>
     </div>
   );

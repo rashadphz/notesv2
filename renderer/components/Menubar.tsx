@@ -1,6 +1,8 @@
 import { Fragment, useContext } from "react";
 import { MenuItem } from "./MenuItem";
 import EditorContext from "../EditorContext";
+import nightwind from "nightwind/helper";
+import { useTheme } from "next-themes";
 
 interface MenuBarItem {
   icon: string;
@@ -11,6 +13,16 @@ interface MenuBarItem {
 
 export const MenuBar = () => {
   const editor = useContext(EditorContext);
+  const { theme, setTheme } = useTheme();
+
+  const toggle = () => {
+    nightwind.beforeTransition();
+    if (theme !== "dark") {
+      setTheme("dark");
+    } else {
+      setTheme("light");
+    }
+  };
 
   const items: MenuBarItem[] = [
     {
@@ -30,6 +42,12 @@ export const MenuBar = () => {
       title: "Strike",
       action: () => editor.chain().focus().toggleStrike().run(),
       isActive: () => editor.isActive("strike"),
+    },
+    {
+      icon: "moon-line",
+      title: "Dark Mode",
+      action: toggle,
+      isActive: () => false,
     },
   ];
 

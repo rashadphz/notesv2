@@ -6,8 +6,8 @@ import "../styles/globals.css";
 import "../styles/prosemirror.css";
 import "remixicon/fonts/remixicon.css";
 import EditorContext from "../EditorContext";
-import { Editor } from "@tiptap/react";
 import { initEditor } from "../components/Editor";
+import { ThemeProvider } from "next-themes";
 
 export const inter = Inter({
   variable: "--font-default",
@@ -16,11 +16,18 @@ export const inter = Inter({
 
 function MyApp({ Component, pageProps }: AppProps) {
   const editor = initEditor();
+
   return (
     <main className={inter.className}>
-      <EditorContext.Provider value={editor}>
-        <Component {...pageProps} />
-      </EditorContext.Provider>
+      <ThemeProvider
+        attribute="class"
+        storageKey="nightwind-mode"
+        defaultTheme="system"
+      >
+        <EditorContext.Provider value={editor}>
+          <Component {...pageProps} />
+        </EditorContext.Provider>
+      </ThemeProvider>
     </main>
   );
 }

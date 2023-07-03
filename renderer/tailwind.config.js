@@ -1,17 +1,17 @@
 const colors = require("tailwindcss/colors");
 
 module.exports = {
+  darkMode: "class",
   content: [
     "./renderer/pages/**/*.{js,ts,jsx,tsx}",
     "./renderer/components/**/*.{js,ts,jsx,tsx}",
     "./renderer/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    colors: {
-      // use colors only specified
-      white: colors.white,
-      gray: colors.gray,
-      blue: colors.blue,
+    nightwind: {
+      colors: {
+        white: "#1E2022",
+      },
     },
     extend: {
       fontFamily: {
@@ -20,5 +20,5 @@ module.exports = {
       },
     },
   },
-  plugins: [require("@tailwindcss/typography")],
+  plugins: [require("@tailwindcss/typography"), require("nightwind")],
 };
