@@ -14,6 +14,28 @@ import { ListItem } from "@tiptap/extension-list-item";
 import { Heading } from "@tiptap/extension-heading";
 import Document from "@tiptap/extension-document";
 import Typography from "@tiptap/extension-typography";
+import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
+
+import { lowlight } from "lowlight/lib/core.js";
+
+import css from "highlight.js/lib/languages/css";
+import js from "highlight.js/lib/languages/javascript";
+import ts from "highlight.js/lib/languages/typescript";
+import python from "highlight.js/lib/languages/python";
+import java from "highlight.js/lib/languages/java";
+import cpp from "highlight.js/lib/languages/cpp";
+import rust from "highlight.js/lib/languages/rust";
+
+import { ReactNodeViewRenderer } from "@tiptap/react";
+import CodeBlockNode from "./nodes/CodeBlockNode";
+
+lowlight.registerLanguage("css", css);
+lowlight.registerLanguage("js", js);
+lowlight.registerLanguage("ts", ts);
+lowlight.registerLanguage("python", python);
+lowlight.registerLanguage("java", java);
+lowlight.registerLanguage("cpp", cpp);
+lowlight.registerLanguage("rust", rust);
 
 export const TipTapExtensions = [
   StarterKit.configure({
@@ -37,15 +59,21 @@ export const TipTapExtensions = [
         class: "border-l-4 border-gray-700",
       },
     },
-    codeBlock: {
-      HTMLAttributes: {
-        class:
-          "p-5 font-mono font-medium text-stone-800 rounded-lg bg-neutral-100 border-gray-600 border-[1px]",
-      },
-    },
   }),
   TextStyle,
   Typography,
   Color,
   Document,
+  CodeBlockLowlight.extend({
+    addNodeView() {
+      return ReactNodeViewRenderer(CodeBlockNode);
+    },
+    addKeyboardShortcuts() {
+      return {
+        Tab: () => this.editor.commands.insertContent("\t"),
+      };
+    },
+  }).configure({
+    lowlight,
+  }),
 ];

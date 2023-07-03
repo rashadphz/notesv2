@@ -26,9 +26,9 @@ export const initEditor = () => {
       <p>
         Isn’t that great? And all of that is editable. But wait, there’s more. Let’s try a code block:
       </p>
-      <pre><code class="language-css">body {
-  display: none;
-}</code></pre>
+      <pre><code class="language-python">def fib(n):
+    return fib(n - 1) + fib(n - 2) if n > 1 else n
+</code></pre>
       <p>
         I know, I know, this is impressive. It’s only the tip of the iceberg though. Give it a try and click a little bit around. Don’t forget to check the other examples too.
       </p>

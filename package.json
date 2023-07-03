@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
+    "@tiptap/extension-code-block-lowlight": "^2.0.3",
     "@tiptap/extension-color": "^2.0.3",
     "@tiptap/extension-highlight": "^2.0.3",
     "@tiptap/extension-image": "^2.0.3",
@@ -27,6 +28,8 @@
     "@tiptap/starter-kit": "^2.0.3",
     "electron-serve": "^1.1.0",
     "electron-store": "^8.1.0",
+    "highlight.js": "^11.8.0",
+    "lowlight": "^2.9.0",
     "next-redux-wrapper": "^8.1.0",
     "next-themes": "^0.2.1",
     "nightwind": "^1.1.13",
