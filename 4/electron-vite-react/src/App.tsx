@@ -1,7 +1,6 @@
-import { useState } from "react";
-import Update from "@/components/update";
-import logoVite from "./assets/logo-vite.svg";
-import logoElectron from "./assets/logo-electron.svg";
+import { Resizable } from "re-resizable";
+import EditorContext from "./EditorContext";
+import NotesEditor, { initEditor } from "./components/editor";
 
 console.log(
   "[App.tsx]",
@@ -9,14 +8,31 @@ console.log(
 );
 
 function App() {
-  const [count, setCount] = useState(0);
+  const editor = initEditor();
   return (
-    <div>
-      <h1 className="text-3xl font-bold underline text-center">
-        Hello world!
-      </h1>
-      <Update />
-    </div>
+    <>
+      <EditorContext.Provider value={editor}>
+        <div className="main-content flex">
+          <Resizable
+            className="h-full overflow-y-scroll border-r-[1px] border-r-slate-100 dark:border-r-slate-700"
+            defaultSize={{ width: 200, height: "100%" }}
+            minWidth={200}
+            maxWidth={400}
+          >
+            {/* <Sidebar /> */}
+          </Resizable>
+          <div className="w-3/4 h-full overflow-y-scroll">
+            <NotesEditor />
+          </div>
+        </div>
+        {/* <div>
+          <h1 className="text-3xl font-bold underline text-center">
+            Hello world!
+          </h1>
+          <Update />
+        </div> */}
+      </EditorContext.Provider>
+    </>
   );
 }
 
