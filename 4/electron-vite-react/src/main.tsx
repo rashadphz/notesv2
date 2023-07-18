@@ -7,15 +7,19 @@ import "./index.css";
 import "./prosemirror.css";
 import "remixicon/fonts/remixicon.css";
 import Theme from "./theme/Theme";
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
 
 ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 ).render(
-  <React.StrictMode>
-    <Theme dataTheme="dark">
-      <App />
-    </Theme>
-  </React.StrictMode>
+  <Provider store={store}>
+    <React.StrictMode>
+      <Theme dataTheme="dark">
+        <App />
+      </Theme>
+    </React.StrictMode>
+  </Provider>
 );
 
 postMessage({ payload: "removeLoading" }, "*");

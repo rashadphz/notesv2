@@ -1,11 +1,12 @@
-import React from "react";
+import { useReduxDispatch, useReduxSelector } from "@/redux/hooks";
+import {
+  Note,
+  fetchNotes,
+  noteSelectors,
+} from "@/redux/slices/noteSlice";
+import React, { useEffect } from "react";
 
-interface SidebarNoteProps {
-  title: string;
-  content: string;
-}
-
-const SidebarNote = ({ title, content }: SidebarNoteProps) => {
+const SidebarNote = ({ title, content }: Note) => {
   return (
     <div className="px-5 flex flex-col">
       <div className="py-5 space-y-1">
@@ -21,29 +22,24 @@ const SidebarNote = ({ title, content }: SidebarNoteProps) => {
 };
 
 const Sidebar = () => {
+  const allNotes = useReduxSelector(noteSelectors.selectAll);
+  const dispatch = useReduxDispatch();
+
+  useEffect(() => {
+    const promise = dispatch(fetchNotes());
+    return () => {
+      promise.abort();
+    };
+  }, []);
+
   return (
     <div>
       <div className="flex flex-col">
-        <SidebarNote
-          title="Git Commands Cheatsheet"
-          content="Why doesn’t printf scramble the text if they run at the same time?"
-        />
-        <SidebarNote
-          title="JavaScript Functions"
-          content="How to define and invoke functions in JavaScript?"
-        />
-        <SidebarNote
-          title="CSS Box Model"
-          content="What are the different components of the CSS box model?"
-        />
-        <SidebarNote
-          title="Python Data Structures"
-          content="What are the commonly used data structures in Python?"
-        />
-        <SidebarNote
-          title="React Component Lifecycle"
-          content="What are the different phases of a React component's lifecycle?"
-        />
+        {allNotes.map((note) => (
+          <div key={note.id}>
+            <SidebarNote {...note} />
+          </div>
+        ))}
       </div>
     </div>
   );
