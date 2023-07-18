@@ -23,6 +23,7 @@ import {
   Code,
   CheckSquare,
 } from "lucide-react";
+import { useTheme } from "@/theme/useTheme";
 
 const Command = Extension.create({
   name: "slash",
@@ -192,21 +193,23 @@ const CommandList = ({
     // if (item && container) updateScrollView(container, item);
   }, [selectedIndex]);
 
+  const { theme, setTheme } = useTheme();
   return (
     <div
       ref={commandListContainerRef}
-      className="z-50 h-auto max-h-[330px] w-72 overflow-y-auto scroll-smooth rounded-md border border-stone-200 bg-white px-1 py-2 shadow-md transition-all"
+      className="z-50 h-auto max-h-[330px] w-72 overflow-y-auto scroll-smooth rounded-md border bg-base-100  border-base-300 px-1 py-2 shadow-md transition-all text-base-content"
+      data-theme={theme}
     >
       {items.map((item, index) => {
         return (
           <button
-            className={`flex w-full items-center space-x-2 px-2 py-1 rounded-md hover:bg-stone-100 text-left transition-all ${
-              index == selectedIndex ? "bg-gray-100" : ""
+            className={`flex w-full items-center space-x-2 px-2 py-1 rounded-md text-left transition-all ${
+              index == selectedIndex ? "bg-base-200" : ""
             }`}
             key={index}
             onClick={() => selectItem(index)}
           >
-            <div className="flex w-8 h-8 items-center justify-center rounded-sm border border-stone-200">
+            <div className="flex w-8 h-8 items-center justify-center rounded-sm border border-base-content-100">
               {item.icon}
             </div>
             <div>

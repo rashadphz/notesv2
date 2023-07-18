@@ -57,7 +57,7 @@ export const TipTapExtensions = [
     },
     blockquote: {
       HTMLAttributes: {
-        class: "border-l-4 border-gray-700",
+        class: "border-l-4 border-primary",
       },
     },
   }),

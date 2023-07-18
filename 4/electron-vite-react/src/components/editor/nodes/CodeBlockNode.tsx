@@ -2,10 +2,10 @@ import { NodeViewContent, NodeViewWrapper } from "@tiptap/react";
 import React from "react";
 import "highlight.js/styles/github-dark-dimmed.css";
 
-const CodeBlock = ({ children }) => {
+const CodeBlock = ({ children }: any) => {
   return (
     <pre
-      className="p-5 font-mono font-medium text-stone-800 rounded-lg bg-neutral-100 border-gray-600 border-[1px]"
+      className="p-5 font-mono font-medium rounded-lg border-[1px]"
       spellCheck="false"
     >
       {children}
