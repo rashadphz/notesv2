@@ -68,6 +68,11 @@ export const noteSlice = createSlice({
     addNote: (state, action: PayloadAction<Note>) => {
       NotesAdapter.addOne(state.all, action.payload);
     },
+    // make this payload take in a note id as a object {id: string}
+    selectNote: (state, action: PayloadAction<{ id: string }>) => {
+      state.selectedNote =
+        state.all.entities[action.payload.id] || null;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchNotes.fulfilled, (state, action) => {
@@ -77,7 +82,7 @@ export const noteSlice = createSlice({
   },
 });
 
-export const {} = noteSlice.actions;
+export const { selectNote } = noteSlice.actions;
 export const noteSelectors = NotesAdapter.getSelectors<RootState>(
   (state) => state.notes.all
 );

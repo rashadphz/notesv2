@@ -3,8 +3,10 @@ import {
   Note,
   fetchNotes,
   noteSelectors,
+  selectNote,
 } from "@/redux/slices/noteSlice";
 import React, { useEffect } from "react";
+import noteSlice from "@/redux/slices/noteSlice";
 
 const SidebarNote = ({ title, content }: Note) => {
   return (
@@ -22,6 +24,9 @@ const SidebarNote = ({ title, content }: Note) => {
 };
 
 const Sidebar = () => {
+  const selectedNote = useReduxSelector(
+    (state) => state.notes.selectedNote
+  );
   const allNotes = useReduxSelector(noteSelectors.selectAll);
   const dispatch = useReduxDispatch();
 
@@ -32,14 +37,31 @@ const Sidebar = () => {
     };
   }, []);
 
+  const changeSelectedNote = (note: Note) => {
+    dispatch(
+      selectNote({
+        id: note.id,
+      })
+    );
+  };
+
   return (
     <div>
       <div className="flex flex-col">
-        {allNotes.map((note) => (
-          <div key={note.id}>
-            <SidebarNote {...note} />
-          </div>
-        ))}
+        {allNotes.map((note) => {
+          const isSelected = selectedNote?.id === note.id;
+          return (
+            <div
+              key={note.id}
+              className={`m-2 rounded-lg ${
+                isSelected ? "bg-neutral-focus" : ""
+              }`}
+              onClick={() => changeSelectedNote(note)}
+            >
+              <SidebarNote {...note} />
+            </div>
+          );
+        })}
       </div>
     </div>
   );
