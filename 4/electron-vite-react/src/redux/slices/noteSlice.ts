@@ -54,11 +54,13 @@ const NotesAdapter = createEntityAdapter<Note>({
 interface NoteState {
   all: EntityState<Note>;
   selectedNote: Note | null;
+  canCreateNewNote: boolean;
 }
 
 const initialState: NoteState = {
   all: NotesAdapter.getInitialState(),
   selectedNote: null,
+  canCreateNewNote: true,
 };
 
 export const noteSlice = createSlice({
@@ -68,7 +70,20 @@ export const noteSlice = createSlice({
     addNote: (state, action: PayloadAction<Note>) => {
       NotesAdapter.addOne(state.all, action.payload);
     },
-    // make this payload take in a note id as a object {id: string}
+    createNote: (state) => {
+      if (!state.canCreateNewNote) return;
+
+      const newNote = {
+        id: Date.now().toString(),
+        title: "",
+        content: "",
+        createdAt: Date.now(),
+        updatedAt: Date.now(),
+      };
+      NotesAdapter.addOne(state.all, newNote);
+      state.selectedNote = newNote;
+      state.canCreateNewNote = false;
+    },
     selectNote: (state, action: PayloadAction<{ id: string }>) => {
       state.selectedNote =
         state.all.entities[action.payload.id] || null;
@@ -82,7 +97,7 @@ export const noteSlice = createSlice({
   },
 });
 
-export const { selectNote } = noteSlice.actions;
+export const { selectNote, createNote } = noteSlice.actions;
 export const noteSelectors = NotesAdapter.getSelectors<RootState>(
   (state) => state.notes.all
 );

@@ -70,6 +70,7 @@ export const TipTapExtensions = [
     transformPastedText: true,
     transformCopiedText: true,
     breaks: true,
+    linkify: true,
   }),
   CodeBlockLowlight.extend({
     addNodeView() {

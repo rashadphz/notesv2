@@ -10,12 +10,14 @@ import noteSlice from "@/redux/slices/noteSlice";
 
 const SidebarNote = ({ title, content }: Note) => {
   return (
-    <div className="px-5 flex flex-col">
-      <div className="py-5 space-y-1">
-        <p className="text-sm font-medium line-clamp-1">{title}</p>
+    <div className="px-3 flex flex-col">
+      <div className="py-3 space-y-1">
+        <p className="text-sm font-medium line-clamp-1">
+          {title || "New Note"}
+        </p>
         <p className="text-xs text-primary line-clamp-1">1d ago</p>
         <p className="text-xs text-neutral-content line-clamp-1">
-          {content}
+          {content || "No content"}
         </p>
       </div>
       <hr className="border-base-300" />
