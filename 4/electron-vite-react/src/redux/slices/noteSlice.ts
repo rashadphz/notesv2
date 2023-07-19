@@ -7,48 +7,22 @@ import {
 } from "@reduxjs/toolkit";
 import { debounce } from "lodash";
 import { RootState } from "../store";
-
-export interface Note {
-  id: string;
-  title: string;
-  content: string;
-  createdAt: number;
-  updatedAt: number;
-}
+import { Note } from "knex/types/tables";
 
 export const fetchNotes = createAsyncThunk<Note[], void>(
   "notes/fetchNotes",
   async (_, { getState }) => {
-    const baseNote = {
-      createdAt: 123,
-      updatedAt: 123,
-    };
-    return [
-      {
-        ...baseNote,
-        content: "### nice widgets for them",
-        title: "indexing youtube videos for",
-        id: 1,
-      },
-      {
-        ...baseNote,
-        content: "mochi dounts",
-        title: "seattle",
-        id: 2,
-      },
-      {
-        ...baseNote,
-        content: "i have a table payment",
-        title: "ask RDI",
-        id: 3,
-      },
-    ];
+    return await api.fetchNotes();
   }
 );
 
 const NotesAdapter = createEntityAdapter<Note>({
   selectId: (note) => note.id,
-  sortComparer: (a, b) => b.updatedAt - a.updatedAt,
+  sortComparer: (a, b) => {
+    if (b.updated === undefined) return -1;
+    if (a.updated === undefined) return 1;
+    return b.updated - a.updated;
+  },
 });
 
 interface NoteState {

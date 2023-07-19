@@ -11,14 +11,15 @@ import { useEffect } from "react";
 // );
 
 function App() {
-//   api.fetchX("hey").then((res) => console.log(res));
+  //   api.fetchX("hey").then((res) => console.log(res));
   const editor = initEditor();
   useEffect(() => {
     (async () => {
-      const x = await api.fetchX("hey");
+      const x = await api.fetchNotes("hey");
       console.log(x);
     })();
   }, []);
+
   return (
     editor && (
       <div className="h-screen">
