@@ -85,9 +85,15 @@ export const noteSlice = createSlice({
       NotesAdapter.upsertOne(state.all, action.payload);
     });
     builder.addCase(deleteNoteAsync.fulfilled, (state, action) => {
-      NotesAdapter.removeOne(state.all, action.payload);
-      const firstId = state.all.ids[0];
-      state.selectedNote = state.all.entities[firstId] || null;
+      const deletedNoteId = action.payload;
+      const deletedNoteIndex = state.all.ids.indexOf(deletedNoteId);
+      if (deletedNoteIndex !== -1) {
+        NotesAdapter.removeOne(state.all, deletedNoteId);
+        const nextNoteId = state.all.ids[deletedNoteIndex] || null;
+        state.selectedNote = nextNoteId
+          ? state.all.entities[nextNoteId] || null
+          : null;
+      }
     });
   },
 });
