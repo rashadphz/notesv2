@@ -1,52 +1,20 @@
 import { Knex } from "knex";
 import { v4 as uuidv4 } from "uuid";
-import { NotesApi } from "./notesApi";
-
-export const db: Knex = require("knex")({
-  client: "sqlite3", // todo: change to better-sqlite3
-  connection: {
-    filename: "./mydb.sqlite",
-  },
-  useNullAsDefault: true,
-});
-
-declare module "knex/types/tables" {
-  export interface Note {
-    id: string;
-    title: string;
-    content: string;
-    created?: number;
-    updated?: number;
-  }
-
-  export interface Tables {
-    note: Note;
-  }
-}
-console.log("creating the tables...");
-
-console.log("creating notes table...");
-db.schema.hasTable("note").then((exists) => {
-  console.log("notes table exists?", exists);
-  if (!exists) {
-    return db.schema
-      .createTable("note", (table) => {
-        table.string("id").primary().unique().notNullable();
-        table.string("title");
-        table.string("content");
-        table.integer("created").notNullable().defaultTo(Date.now());
-        table.integer("updated").notNullable().defaultTo(Date.now());
-      })
-      .then(() => {
-        console.log("created table note");
-      })
-      .catch((err) => {
-        console.log("error creating table note", err);
-      });
-  }
-});
 
 import { Note } from "knex/types/tables";
+import { db } from ".";
+
+export interface NotesApi {
+  fetchNotes: () => Promise<Note[]>;
+  updateNote: (id: string, updates: Partial<Note>) => Promise<Note>;
+  createNote: () => Promise<Note>;
+  getNote: (id: string) => Promise<Note | null>;
+  deleteNote: (id: string) => Promise<boolean>;
+  saveNote: (
+    id: string,
+    updates: Partial<Note>
+  ) => Promise<Note | null>;
+}
 
 const fetchNotes = async () => {
   return await db("note").select("*");
@@ -103,4 +71,11 @@ const getNote = async (id: string): Promise<Note | null> => {
   return notes.length ? notes[0] : null;
 };
 
-export default { NotesApi };
+export const NotesApi: NotesApi = {
+  fetchNotes,
+  updateNote,
+  createNote,
+  getNote,
+  deleteNote,
+  saveNote,
+};

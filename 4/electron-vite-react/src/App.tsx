@@ -5,20 +5,8 @@ import { Titlebar } from "./components/titlebar";
 import Sidebar from "./components/sidebar";
 import { useEffect } from "react";
 
-// console.log(
-//   "[App.tsx]",
-//   `Hello world from Electron ${process.versions.electron}!`
-// );
-
 function App() {
-  //   api.fetchX("hey").then((res) => console.log(res));
   const editor = initEditor();
-  useEffect(() => {
-    (async () => {
-      const x = await api.fetchNotes("hey");
-      console.log(x);
-    })();
-  }, []);
 
   return (
     editor && (

@@ -2,7 +2,10 @@ import { Fragment, useContext } from "react";
 import EditorContext from "@/EditorContext";
 import { useTheme } from "@/theme/useTheme";
 import { useReduxDispatch, useReduxSelector } from "@/redux/hooks";
-import { createNoteAsync } from "@/redux/slices/noteSlice";
+import {
+  createNoteAsync,
+  deleteNoteAsync,
+} from "@/redux/slices/noteSlice";
 
 interface MenuBarItem {
   icon: string;
@@ -27,7 +30,7 @@ const MenuItem = ({
         }
       `}</style>
       <button
-        className="menuItem p-2 rounded-md disabled:opacity-50 enabled:hover:bg-base-300 w-10 h-10 "
+        className="menuItem rounded-md disabled:opacity-50 enabled:hover:bg-base-200 w-8 h-8 center"
         onClick={action}
         title={title}
         disabled={isDisabled}
@@ -43,12 +46,32 @@ export const MenuBar = () => {
   const editor = useContext(EditorContext);
   if (!editor) return null;
 
-  const canCreateNewNote = useReduxSelector(
-    (state) => state.notes.canCreateNewNote
+  const selectedNote = useReduxSelector(
+    (state) => state.notes.selectedNote
   );
-  const dispatch = useReduxDispatch();
 
-  const items: MenuBarItem[] = [
+  const dispatch = useReduxDispatch();
+  const leftItems: MenuBarItem[] = [
+    {
+      icon: "draft-line",
+      title: "New Note",
+      action: () => dispatch(createNoteAsync()),
+      isActive: () => false,
+      isDisabled: false,
+    },
+    {
+      icon: "delete-bin-line",
+      title: "Delete Note",
+      action: () =>
+        selectedNote
+          ? dispatch(deleteNoteAsync(selectedNote.id))
+          : null,
+      isActive: () => false,
+      isDisabled: false,
+    },
+  ];
+
+  const rightItems: MenuBarItem[] = [
     {
       icon: "bold",
       title: "Bold",
@@ -79,22 +102,25 @@ export const MenuBar = () => {
       isActive: () => false,
       isDisabled: false,
     },
-    {
-      icon: "draft-line",
-      title: "New Note",
-      action: () => dispatch(createNoteAsync()),
-      isActive: () => false,
-      isDisabled: !canCreateNewNote,
-    },
   ];
 
   return (
-    <div>
-      {items.map((item, index) => (
-        <Fragment key={index}>
-          <MenuItem {...item} />
-        </Fragment>
-      ))}
+    <div className="flex items-center justify-between h-full">
+      <div className="space-x-2">
+        {leftItems.map((item, index) => (
+          <Fragment key={index}>
+            <MenuItem {...item} />
+          </Fragment>
+        ))}
+      </div>
+      <div className="w-px h-8 bg-base-content mx-4"></div>
+      <div className="flex items-center space-x-2">
+        {rightItems.map((item, index) => (
+          <Fragment key={index}>
+            <MenuItem {...item} />
+          </Fragment>
+        ))}
+      </div>
     </div>
   );
 };

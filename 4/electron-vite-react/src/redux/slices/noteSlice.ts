@@ -9,17 +9,27 @@ import { debounce } from "lodash";
 import { RootState } from "../store";
 import { Note } from "knex/types/tables";
 
+const NotesApi = api.NotesApi;
+
 export const fetchNotes = createAsyncThunk<Note[], void>(
   "notes/fetchNotes",
   async (_, { getState }) => {
-    return await api.fetchNotes();
+    return await NotesApi.fetchNotes();
   }
 );
 
 export const createNoteAsync = createAsyncThunk<Note, void>(
   "notes/createNote",
   async (_, { getState }) => {
-    return await api.createNote();
+    return await NotesApi.createNote();
+  }
+);
+
+export const deleteNoteAsync = createAsyncThunk<string, string>(
+  "notes/deleteNote",
+  async (id, { getState }) => {
+    await NotesApi.deleteNote(id);
+    return id;
   }
 );
 
@@ -27,14 +37,9 @@ export const saveNoteAsync = createAsyncThunk<Note, Note>(
   "notes/saveNote",
   async (note, { getState }) => {
     const { id, ...updates } = note;
-    return (await api.saveNote(id, updates)) || note;
+    return (await NotesApi.saveNote(id, updates)) || note;
   }
 );
-
-// export const saveNoteAsyncDebounce: (note: Note) => void = debounce(
-//   (note: Note) => saveNoteAsync(note),
-//   1000
-// );
 
 const NotesAdapter = createEntityAdapter<Note>({
   selectId: (note) => note.id,
@@ -78,6 +83,11 @@ export const noteSlice = createSlice({
     });
     builder.addCase(saveNoteAsync.fulfilled, (state, action) => {
       NotesAdapter.upsertOne(state.all, action.payload);
+    });
+    builder.addCase(deleteNoteAsync.fulfilled, (state, action) => {
+      NotesAdapter.removeOne(state.all, action.payload);
+      const firstId = state.all.ids[0];
+      state.selectedNote = state.all.entities[firstId] || null;
     });
   },
 });
