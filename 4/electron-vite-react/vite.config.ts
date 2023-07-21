@@ -5,6 +5,7 @@ import electron from "vite-plugin-electron";
 import renderer from "vite-plugin-electron-renderer";
 import pkg from "./package.json";
 import path from "node:path";
+import rollupNodePolyFill from "rollup-plugin-node-polyfills";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ command }) => {
@@ -18,6 +19,7 @@ export default defineConfig(({ command }) => {
     resolve: {
       alias: {
         "@": path.join(__dirname, "src"),
+        punycode: "rollup-plugin-node-polyfills/polyfills/punycode",
       },
     },
     plugins: [
@@ -66,6 +68,7 @@ export default defineConfig(({ command }) => {
                     "dependencies" in pkg ? pkg.dependencies : {}
                   ),
                 ],
+                plugins: [rollupNodePolyFill()],
               },
             },
           },

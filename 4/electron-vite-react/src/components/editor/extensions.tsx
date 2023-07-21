@@ -8,7 +8,7 @@ import TextStyle from "@tiptap/extension-text-style";
 import { Color } from "@tiptap/extension-color";
 import TaskItem from "@tiptap/extension-task-item";
 import TaskList from "@tiptap/extension-task-list";
-// import { Markdown } from "tiptap-markdown";
+import { Markdown } from "tiptap-markdown";
 import Highlight from "@tiptap/extension-highlight";
 import { ListItem } from "@tiptap/extension-list-item";
 import { Heading } from "@tiptap/extension-heading";
@@ -71,10 +71,10 @@ export const TipTapExtensions = [
         "text-primary underline cursor-pointer hover:text-primary-focus transition-colors",
     },
   }),
-//   Placeholder.configure({
-//     placeholder: "Press '/' for commands, or start typing...",
-//     includeChildren: true,
-//   }),
+  //   Placeholder.configure({
+  //     placeholder: "Press '/' for commands, or start typing...",
+  //     includeChildren: true,
+  //   }),
   CodeBlockLowlight.extend({
     addNodeView() {
       return ReactNodeViewRenderer(CodeBlockNode);
@@ -87,11 +87,11 @@ export const TipTapExtensions = [
   }).configure({
     lowlight,
   }),
-//   Markdown.configure({
-//     html: false,
-//     transformPastedText: true,
-//     transformCopiedText: true,
-//     breaks: true,
-//     linkify: true,
-//   }),
+  Markdown.configure({
+    html: false,
+    transformPastedText: true,
+    transformCopiedText: true,
+    breaks: true,
+    linkify: true,
+  }),
 ];

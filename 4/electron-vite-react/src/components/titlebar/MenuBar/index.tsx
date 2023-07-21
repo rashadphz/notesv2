@@ -2,7 +2,7 @@ import { Fragment, useContext } from "react";
 import EditorContext from "@/EditorContext";
 import { useTheme } from "@/theme/useTheme";
 import { useReduxDispatch, useReduxSelector } from "@/redux/hooks";
-import { createNote } from "@/redux/slices/noteSlice";
+import { createNoteAsync } from "@/redux/slices/noteSlice";
 
 interface MenuBarItem {
   icon: string;
@@ -82,7 +82,7 @@ export const MenuBar = () => {
     {
       icon: "draft-line",
       title: "New Note",
-      action: () => dispatch(createNote()),
+      action: () => dispatch(createNoteAsync()),
       isActive: () => false,
       isDisabled: !canCreateNewNote,
     },

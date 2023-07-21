@@ -3,11 +3,26 @@ import React, { useContext, useEffect } from "react";
 import { TipTapExtensions } from "./extensions";
 import { TipTapProps } from "./props";
 import EditorContext from "@/EditorContext";
-import { useReduxSelector } from "@/redux/hooks";
-import { useSelector } from "react-redux";
+import { useReduxDispatch, useReduxSelector } from "@/redux/hooks";
+import { editNote, saveNoteAsync } from "@/redux/slices/noteSlice";
 
 export const initEditor = () => {
+  const dispatch = useReduxDispatch();
+  const selectedNote = useReduxSelector(
+    (state) => state.notes.selectedNote
+  );
+
+  useEffect(() => {
+    console.log("The selected note is: ", selectedNote);
+  }, [selectedNote]);
+
   return useEditor({
+    onUpdate: ({ editor }) => {
+      if (!selectedNote) return;
+
+      const markdown = editor.storage.markdown.getMarkdown();
+      dispatch(saveNoteAsync({ ...selectedNote, content: markdown }));
+    },
     extensions: TipTapExtensions,
     editorProps: TipTapProps,
     content: `## Hi There, \n this is a *basic* example of **tiptap**. Sure, there are all kind of basic text styles you’d probably expect from a text editor. \n But wait until you see the lists: - That’s a bullet list with one … - … or two list items.`,

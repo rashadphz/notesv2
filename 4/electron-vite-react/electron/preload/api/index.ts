@@ -1,4 +1,5 @@
 import { Knex } from "knex";
+import { v4 as uuidv4 } from "uuid";
 
 const db: Knex = require("knex")({
   client: "sqlite3", // todo: change to better-sqlite3
@@ -44,17 +45,67 @@ db.schema.hasTable("note").then((exists) => {
   }
 });
 
+import { Note } from "knex/types/tables";
+
 const fetchNotes = async () => {
   return await db("note").select("*");
 };
 
-import { Note } from "knex/types/tables";
-const createNote = async (note: Note) => {
-  const res = await db("note").insert(note);
-  return res;
+const updateNote = async (
+  id: string,
+  updates: Partial<Note>
+): Promise<Note> => {
+  return await db("note")
+    .where("id", id)
+    .update({
+      ...updates,
+      updated: Date.now(),
+    });
+};
+
+const deleteNote = async (id: string): Promise<boolean> => {
+  return await db("note").where("id", id).del();
+};
+
+const createNote = async (): Promise<Note> => {
+  const note: Note = {
+    id: uuidv4(),
+    title: "",
+    content: "",
+    created: Date.now(),
+    updated: Date.now(),
+  };
+
+  await db("note").insert(note);
+  return note;
+};
+
+const saveNote = async (
+  id: string,
+  updates: Partial<Note>
+): Promise<Note | null> => {
+  const note = await getNote(id);
+  if (!note) return null;
+
+  const updatedNote = {
+    ...note,
+    ...updates,
+    updated: Date.now(),
+  };
+
+  await db("note").where("id", id).update(updatedNote);
+  return updatedNote;
+};
+
+const getNote = async (id: string): Promise<Note | null> => {
+  const notes: Note[] = await db("note").where("id", id);
+  return notes.length ? notes[0] : null;
 };
 
 export default {
   fetchNotes,
   createNote,
+  getNote,
+  deleteNote,
+  saveNote,
 };

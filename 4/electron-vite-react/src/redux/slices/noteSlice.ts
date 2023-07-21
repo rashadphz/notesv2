@@ -16,6 +16,26 @@ export const fetchNotes = createAsyncThunk<Note[], void>(
   }
 );
 
+export const createNoteAsync = createAsyncThunk<Note, void>(
+  "notes/createNote",
+  async (_, { getState }) => {
+    return await api.createNote();
+  }
+);
+
+export const saveNoteAsync = createAsyncThunk<Note, Note>(
+  "notes/saveNote",
+  async (note, { getState }) => {
+    const { id, ...updates } = note;
+    return (await api.saveNote(id, updates)) || note;
+  }
+);
+
+// export const saveNoteAsyncDebounce: (note: Note) => void = debounce(
+//   (note: Note) => saveNoteAsync(note),
+//   1000
+// );
+
 const NotesAdapter = createEntityAdapter<Note>({
   selectId: (note) => note.id,
   sortComparer: (a, b) => {
@@ -41,23 +61,6 @@ export const noteSlice = createSlice({
   name: "notes",
   initialState,
   reducers: {
-    addNote: (state, action: PayloadAction<Note>) => {
-      NotesAdapter.addOne(state.all, action.payload);
-    },
-    createNote: (state) => {
-      if (!state.canCreateNewNote) return;
-
-      const newNote = {
-        id: Date.now().toString(),
-        title: "",
-        content: "",
-        createdAt: Date.now(),
-        updatedAt: Date.now(),
-      };
-      NotesAdapter.addOne(state.all, newNote);
-      state.selectedNote = newNote;
-      state.canCreateNewNote = false;
-    },
     selectNote: (state, action: PayloadAction<{ id: string }>) => {
       state.selectedNote =
         state.all.entities[action.payload.id] || null;
@@ -68,10 +71,18 @@ export const noteSlice = createSlice({
       NotesAdapter.setAll(state.all, action.payload);
       state.selectedNote = action.payload[0] || null;
     });
+    builder.addCase(createNoteAsync.fulfilled, (state, action) => {
+      NotesAdapter.addOne(state.all, action.payload);
+      state.selectedNote = action.payload;
+      state.canCreateNewNote = false;
+    });
+    builder.addCase(saveNoteAsync.fulfilled, (state, action) => {
+      NotesAdapter.upsertOne(state.all, action.payload);
+    });
   },
 });
 
-export const { selectNote, createNote } = noteSlice.actions;
+export const { selectNote } = noteSlice.actions;
 export const noteSelectors = NotesAdapter.getSelectors<RootState>(
   (state) => state.notes.all
 );
