@@ -57,7 +57,7 @@ export const TipTapExtensions = [
     },
     blockquote: {
       HTMLAttributes: {
-        class: "border-l-4 border-primary",
+        class: "border-l-4 border-base-content",
       },
     },
   }),
@@ -68,7 +68,7 @@ export const TipTapExtensions = [
   Link.configure({
     HTMLAttributes: {
       class:
-        "text-primary underline cursor-pointer hover:text-primary-focus transition-colors",
+        "underline cursor-pointer text-primary-neutral-content transition-colors",
     },
   }),
   //   Placeholder.configure({

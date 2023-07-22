@@ -5,9 +5,9 @@ import {
   selectNote,
 } from "@/redux/slices/noteSlice";
 import React, { useEffect } from "react";
-import noteSlice from "@/redux/slices/noteSlice";
 import { Note } from "knex/types/tables";
-import { isNodeSelection } from "@tiptap/react";
+import CleaanBadge from "../CleaanBadge";
+import { random } from "lodash";
 
 interface SidebarNoteProps extends Note {
   isSelected: boolean;
@@ -23,21 +23,32 @@ const SidebarNote = ({
   return (
     <div
       className={`px-2 flex flex-col rounded-lg ${
-        isSelected
-          ? "bg-base-300 text-base-content"
-          : "text-neutral-600"
+        isSelected ? "bg-base-300" : ""
       }`}
     >
       <div className="py-3 space-y-1">
         <p className={`text-sm line-clamp-1 ${titleWeight}`}>
           {title || "New Note"}
         </p>
-        <p className={`text-xs line-clamp-1 ${contentWeight}`}>
-          1d ago
-        </p>
-        <p className={`text-xs line-clamp-1 ${contentWeight}`}>
+        {isSelected && (
+          <div className="flex space-x-1">
+            <CleaanBadge
+              className={`text-xs text-secondary-content bg-primary`}
+            >
+              <text>hey</text>
+            </CleaanBadge>
+            <CleaanBadge
+              className={`text-xs text-primary-content bg-primary`}
+            >
+              <text>👋🏿</text>
+            </CleaanBadge>
+          </div>
+        )}
+        {/* <p
+          className={`text-xs line-clamp-1 opacity-50 ${contentWeight}`}
+        >
           {content || "No content"}
-        </p>
+        </p> */}
       </div>
       <hr className="border-base-300" />
     </div>

@@ -47,6 +47,8 @@ async function createWindow() {
     title: "Main window",
     width: 800,
     height: 600,
+    minWidth: 500,
+    minHeight: 400,
     titleBarStyle: "hidden",
     trafficLightPosition: {
       x: 20,

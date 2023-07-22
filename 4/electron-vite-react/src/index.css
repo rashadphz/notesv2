@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 .titlebar {
   -webkit-app-region: drag; /* Allow user to drag the window using this titlebar */
   -webkit-user-select: none; /* Prevent user from selecting things */
@@ -17,4 +23,15 @@
 }
 body {
   overflow: hidden; /* Make the HTML body be non-scrollable */
+}
+
+.badge {
+  align-items: center;
+  padding-left: 9px;
+  padding-right: 9px;
+  transform: matrix(1, 0, -0.2, 1, 0, 0);
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  z-index: 1;
 }

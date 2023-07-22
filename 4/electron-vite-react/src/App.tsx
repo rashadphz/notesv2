@@ -22,7 +22,7 @@ function App() {
             >
               <Sidebar />
             </Resizable>
-            <div className="w-3/4 h-full overflow-y-scroll">
+            <div className="w-3/4 h-full overflow-y-scroll max-w-[80ch] mx-auto">
               <NotesEditor />
             </div>
           </div>

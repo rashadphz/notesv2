@@ -5,7 +5,7 @@ import "highlight.js/styles/github-dark-dimmed.css";
 const CodeBlock = ({ children }: any) => {
   return (
     <pre
-      className="p-5 font-mono font-medium rounded-lg border-[1px]"
+      className="p-5 font-mono font-medium rounded-lg border-[1px] border-base-300"
       spellCheck="false"
     >
       {children}

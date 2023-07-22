@@ -11,6 +11,14 @@ import { Note } from "knex/types/tables";
 
 const NotesApi = api.NotesApi;
 
+const titleFromContent = (content: string) => {
+  const firstLine = content.split("\n")[0];
+  // remove markdown using the library
+  const markdownRemoved = firstLine.replace(/[#*]/g, "");
+
+  return markdownRemoved.trim();
+};
+
 export const fetchNotes = createAsyncThunk<Note[], void>(
   "notes/fetchNotes",
   async (_, { getState }) => {
@@ -36,8 +44,15 @@ export const deleteNoteAsync = createAsyncThunk<string, string>(
 export const saveNoteAsync = createAsyncThunk<Note, Note>(
   "notes/saveNote",
   async (note, { getState }) => {
-    const { id, ...updates } = note;
-    return (await NotesApi.saveNote(id, updates)) || note;
+    const { id, title, ...updates } = note;
+    const parsedTitle = titleFromContent(note.content);
+
+    return (
+      (await NotesApi.saveNote(id, {
+        title: parsedTitle,
+        ...updates,
+      })) || note
+    );
   }
 );
 
