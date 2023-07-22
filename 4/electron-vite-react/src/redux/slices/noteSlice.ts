@@ -74,7 +74,8 @@ export const noteSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchNotes.fulfilled, (state, action) => {
       NotesAdapter.setAll(state.all, action.payload);
-      state.selectedNote = action.payload[0] || null;
+      state.selectedNote =
+        action.payload[action.payload.length - 1] || null;
     });
     builder.addCase(createNoteAsync.fulfilled, (state, action) => {
       NotesAdapter.addOne(state.all, action.payload);

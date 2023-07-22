@@ -5,13 +5,21 @@ module.exports = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   daisyui: {
     themes: [
-      "light",
+      {
+        light: {
+          ...require("daisyui/src/theming/themes")[
+            "[data-theme=lofi]"
+          ],
+          "base-200": "#FAFAF9",
+          "base-300": "#F1F1F1",
+        },
+      },
+
       {
         dark: {
           ...require("daisyui/src/theming/themes")[
-            "[data-theme=night]"
+            "[data-theme=black]"
           ],
-          "base-100": "#1E2022",
         },
       },
     ],

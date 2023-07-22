@@ -1,22 +1,41 @@
 import { useReduxDispatch, useReduxSelector } from "@/redux/hooks";
 import {
-  Note,
   fetchNotes,
   noteSelectors,
   selectNote,
 } from "@/redux/slices/noteSlice";
 import React, { useEffect } from "react";
 import noteSlice from "@/redux/slices/noteSlice";
+import { Note } from "knex/types/tables";
+import { isNodeSelection } from "@tiptap/react";
 
-const SidebarNote = ({ title, content }: Note) => {
+interface SidebarNoteProps extends Note {
+  isSelected: boolean;
+}
+const SidebarNote = ({
+  title,
+  content,
+  isSelected,
+}: SidebarNoteProps) => {
+  const titleWeight = isSelected ? "font-bold" : "font-medium";
+  const contentWeight = isSelected ? "font-medium" : "font-normal";
+
   return (
-    <div className="px-3 flex flex-col">
+    <div
+      className={`px-2 flex flex-col rounded-lg ${
+        isSelected
+          ? "bg-base-300 text-base-content"
+          : "text-neutral-600"
+      }`}
+    >
       <div className="py-3 space-y-1">
-        <p className="text-sm font-medium line-clamp-1">
+        <p className={`text-sm line-clamp-1 ${titleWeight}`}>
           {title || "New Note"}
         </p>
-        <p className="text-xs text-primary line-clamp-1">1d ago</p>
-        <p className="text-xs text-neutral-content line-clamp-1">
+        <p className={`text-xs line-clamp-1 ${contentWeight}`}>
+          1d ago
+        </p>
+        <p className={`text-xs line-clamp-1 ${contentWeight}`}>
           {content || "No content"}
         </p>
       </div>
@@ -49,18 +68,16 @@ const Sidebar = () => {
 
   return (
     <div>
-      <div className="flex flex-col">
+      <div className="flex flex-col bg-base-200">
         {allNotes.map((note) => {
           const isSelected = selectedNote?.id === note.id;
           return (
             <div
               key={note.id}
-              className={`m-2 rounded-lg ${
-                isSelected ? "bg-neutral-focus" : ""
-              }`}
+              className="mt-1 mx-2 rounded-2xl"
               onClick={() => changeSelectedNote(note)}
             >
-              <SidebarNote {...note} />
+              <SidebarNote {...note} isSelected={isSelected} />
             </div>
           );
         })}

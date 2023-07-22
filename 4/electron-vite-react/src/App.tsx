@@ -13,9 +13,9 @@ function App() {
       <div className="h-screen">
         <EditorContext.Provider value={editor}>
           <Titlebar />
-          <div className="main-content flex bg-base-100 text-base-content">
+          <div className="main-content flex text-base-content">
             <Resizable
-              className="h-full overflow-y-scroll border-r-[2px] border-base-300"
+              className="h-full overflow-y-scroll border-r-[1px] border-base-300 bg-base-200 shadow-inner"
               defaultSize={{ width: 200, height: "100%" }}
               minWidth={200}
               maxWidth={400}

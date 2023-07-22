@@ -15,7 +15,7 @@ ReactDOM.createRoot(
 ).render(
   <Provider store={store}>
     <React.StrictMode>
-      <Theme dataTheme="dark">
+      <Theme dataTheme="light">
         <App />
       </Theme>
     </React.StrictMode>
