@@ -31,7 +31,7 @@ const MenuItem = ({
         }
       `}</style>
       <button
-        className="menuItem rounded-md disabled:opacity-50 enabled:hover:bg-base-200 w-8 h-8 center"
+        className="menuItem rounded-md disabled:opacity-50 enabled:hover:bg-base-300 w-8 h-8 center"
         onClick={action}
         title={title}
         disabled={isDisabled}

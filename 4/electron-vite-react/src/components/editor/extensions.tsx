@@ -38,8 +38,14 @@ lowlight.registerLanguage("java", java);
 lowlight.registerLanguage("cpp", cpp);
 lowlight.registerLanguage("rust", rust);
 
+const HeaderDoc = Document.extend({
+  content: "heading block*",
+});
+
 export const TipTapExtensions = [
+  HeaderDoc,
   StarterKit.configure({
+    document: false,
     bulletList: {
       HTMLAttributes: {
         class: "list-disc list-outside leading-3 -mt-2",
@@ -71,10 +77,17 @@ export const TipTapExtensions = [
         "underline cursor-pointer text-primary-neutral-content transition-colors",
     },
   }),
-  //   Placeholder.configure({
-  //     placeholder: "Press '/' for commands, or start typing...",
-  //     includeChildren: true,
-  //   }),
+  Placeholder.configure({
+    emptyNodeClass: "text-base-content opacity-30 is-empty",
+    showOnlyCurrent: false,
+    placeholder: ({ node }) => {
+      if (node.type.name === "heading" && node.attrs.level === 1) {
+        return "Untitled";
+      }
+
+      return "Press / for commands or start typing...";
+    },
+  }),
   CodeBlockLowlight.extend({
     addNodeView() {
       return ReactNodeViewRenderer(CodeBlockNode);
