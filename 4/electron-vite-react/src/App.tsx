@@ -4,6 +4,7 @@ import NotesEditor, { initEditor } from "./components/editor";
 import { Titlebar } from "./components/titlebar";
 import Sidebar from "./components/sidebar";
 import { useEffect } from "react";
+import { FloatingMenuBar } from "./components/titlebar/floatingMenuBar";
 
 function App() {
   const editor = initEditor();
@@ -22,8 +23,11 @@ function App() {
             >
               <Sidebar />
             </Resizable>
-            <div className="w-3/4 h-full overflow-y-scroll max-w-[80ch] mx-auto">
+            <div className="w-3/4 h-full overflow-y-scroll max-w-[90ch] mx-auto relative">
               <NotesEditor />
+              <div className="absolute bottom-[1.5rem] right-[50%] translate-x-[50%]">
+                <FloatingMenuBar />
+              </div>
             </div>
           </div>
         </EditorContext.Provider>
