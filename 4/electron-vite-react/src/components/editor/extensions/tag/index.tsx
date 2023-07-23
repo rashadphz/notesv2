@@ -22,11 +22,9 @@ export type TagOptions = {
 export const TagPluginKey = new PluginKey("tag");
 
 export const TagNode = ({ node }: any) => {
-  console.log("TagNode");
-  console.log(node.attrs);
   return (
-    <NodeViewWrapper className="code-block relative">
-      <CleaanBadge className="text-xs text-secondary-content bg-primary">
+    <NodeViewWrapper as="span" className="whitespace-nowrap">
+      <CleaanBadge className="hover:cursor-pointer text-xs text-secondary-content bg-primary">
         {node.attrs.label ?? node.attrs.id}
       </CleaanBadge>
     </NodeViewWrapper>
@@ -98,7 +96,7 @@ export const TagExtension = Node.create<TagOptions>({
 
   inline: true,
 
-  selectable: false,
+  selectable: true,
 
   atom: true,
 

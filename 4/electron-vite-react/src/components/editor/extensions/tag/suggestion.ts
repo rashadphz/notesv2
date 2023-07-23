@@ -9,13 +9,11 @@ const suggestion: Omit<SuggestionOptions<Tag>, "editor"> = {
     return [
       {
         id: "1",
-        name: "Lea Thompson",
-        color: "bg-red-500",
+        name: "vision",
       },
       {
         id: "2",
-        name: "Justine Bateman",
-        color: "bg-blue-500",
+        name: "ai",
       },
     ];
   },
