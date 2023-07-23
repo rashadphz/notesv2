@@ -97,14 +97,15 @@ export const TipTapExtensions = [
   //   }),
   History,
   TagExtension.configure({
-    HTMLAttributes: {
-      class: "text-primary-content",
-    },
+    // HTMLAttributes: {
+    //   class:
+    //     "badge text-xs text-secondary-content bg-primary",
+    // },
     suggestion,
   }),
   TextStyle,
   Typography,
-  SlashCommand,
+  //   SlashCommand,
   Color,
   Link.configure({
     HTMLAttributes: {

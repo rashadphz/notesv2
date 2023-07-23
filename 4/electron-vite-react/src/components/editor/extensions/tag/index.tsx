@@ -1,6 +1,12 @@
+import CleaanBadge from "@/components/CleaanBadge";
 import { mergeAttributes, Node } from "@tiptap/core";
 import { Node as ProseMirrorNode } from "@tiptap/pm/model";
 import { PluginKey } from "@tiptap/pm/state";
+import {
+  NodeViewWrapper,
+  ReactNodeViewRenderer,
+  textblockTypeInputRule,
+} from "@tiptap/react";
 import Suggestion, { SuggestionOptions } from "@tiptap/suggestion";
 import { Tag } from "knex/types/tables";
 
@@ -15,8 +21,25 @@ export type TagOptions = {
 
 export const TagPluginKey = new PluginKey("tag");
 
+export const TagNode = ({ node }: any) => {
+  console.log("TagNode");
+  console.log(node.attrs);
+  return (
+    <NodeViewWrapper className="code-block relative">
+      <CleaanBadge className="text-xs text-secondary-content bg-primary">
+        {node.attrs.label ?? node.attrs.id}
+      </CleaanBadge>
+    </NodeViewWrapper>
+  );
+};
+
 export const TagExtension = Node.create<TagOptions>({
   name: "tag",
+
+  addNodeView() {
+    return ReactNodeViewRenderer(TagNode);
+  },
+
   addOptions() {
     return {
       HTMLAttributes: {},
@@ -38,20 +61,23 @@ export const TagExtension = Node.create<TagOptions>({
             range.to += 1;
           }
 
+          console.log(props);
           editor
             .chain()
             .focus()
-            .insertContentAt(range, tag.name)
-            // .insertContentAt(range, [
-            //   {
-            //     type: this.name,
-            //     attrs: tag.name,
-            //   },
-            //   {
-            //     type: "text",
-            //     text: " ",
-            //   },
-            // ])
+            .insertContentAt(range, [
+              {
+                type: this.name,
+                attrs: {
+                  id: tag.id,
+                  label: tag.name,
+                },
+              },
+              {
+                type: "text",
+                text: " ",
+              },
+            ])
             .run();
 
           window.getSelection()?.collapseToEnd();
@@ -77,6 +103,7 @@ export const TagExtension = Node.create<TagOptions>({
   atom: true,
 
   addAttributes() {
+    console.log("addAttributes");
     return {
       id: {
         default: null,
@@ -131,13 +158,6 @@ export const TagExtension = Node.create<TagOptions>({
     ];
   },
 
-  renderText({ node }) {
-    return this.options.renderLabel({
-      options: this.options,
-      node,
-    });
-  },
-
   addKeyboardShortcuts() {
     return {
       Backspace: () =>
@@ -167,6 +187,18 @@ export const TagExtension = Node.create<TagOptions>({
         }),
     };
   },
+  //   addInputRules() {
+  //     return [
+  //       textblockTypeInputRule({
+  //         find: new RegExp(`^(#\w*)$`),
+  //         type: this.type,
+  //         getAttributes: (match) => {
+  //           const [_, id] = match;
+  //           return { id };
+  //         },
+  //       }),
+  //     ];
+  //   },
 
   addProseMirrorPlugins() {
     return [
