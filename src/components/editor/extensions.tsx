@@ -97,15 +97,11 @@ export const TipTapExtensions = [
   //   }),
   History,
   TagExtension.configure({
-    // HTMLAttributes: {
-    //   class:
-    //     "badge text-xs text-secondary-content bg-primary",
-    // },
     suggestion,
   }),
   TextStyle,
   Typography,
-  //   SlashCommand,
+  SlashCommand,
   Color,
   Link.configure({
     HTMLAttributes: {
@@ -119,7 +115,6 @@ export const TipTapExtensions = [
       if (node.type.name === "heading" && node.attrs.level === 1) {
         return "Untitled";
       }
-
       return "Press / for commands or start typing...";
     },
   }),

@@ -113,14 +113,6 @@ export const MenuBar = () => {
           </Fragment>
         ))}
       </div>
-      <div className="w-px h-8 bg-base-content mx-4"></div>
-      <div className="flex items-center space-x-2">
-        {rightItems.map((item, index) => (
-          <Fragment key={index}>
-            <MenuItem {...item} />
-          </Fragment>
-        ))}
-      </div>
     </div>
   );
 };

@@ -1,10 +1,17 @@
+import { Editor as CoreEditor } from "@tiptap/core";
 import { EditorContent, useEditor } from "@tiptap/react";
-import React, { useContext, useEffect } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+} from "react";
 import { TipTapExtensions } from "./extensions";
 import { TipTapProps } from "./props";
 import EditorContext from "@/EditorContext";
 import { useReduxDispatch, useReduxSelector } from "@/redux/hooks";
 import { saveNoteAsync } from "@/redux/slices/noteSlice";
+import { EditorState } from "@tiptap/pm/state";
 
 export const initEditor = () => {
   const dispatch = useReduxDispatch();
@@ -40,7 +47,7 @@ const NotesEditor = () => {
   }, [editor, selectedNote]);
 
   return (
-    <div className="pb-20 relative w-full p-12 px-8 sm:px-12">
+    <div className="pb-20 relative w-full p-4 px-8 sm:px-12">
       <EditorContent editor={editor} />
     </div>
   );

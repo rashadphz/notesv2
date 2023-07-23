@@ -5,10 +5,8 @@ export const useTheme = (value?: DataTheme) => {
   const { theme, setTheme } = useContext(ThemeContext);
 
   useEffect(() => {
-    console.log("useeffected");
     if (value && theme !== value) {
       setTheme(value);
-      console.log(`Theme changed to ${value}`);
     }
   }, [value]);
 
