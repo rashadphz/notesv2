@@ -9,6 +9,7 @@ import {
 } from "@tiptap/react";
 import Suggestion, { SuggestionOptions } from "@tiptap/suggestion";
 import { Tag } from "knex/types/tables";
+import { MarkdownNodeSpec } from "tiptap-markdown";
 
 export type TagOptions = {
   HTMLAttributes: Record<string, any>;
@@ -153,6 +154,27 @@ export const TagExtension = Node.create<TagOptions>({
     ];
   },
 
+  addStorage() {
+    const markdown: MarkdownNodeSpec = {
+      serialize: (state, node) => {
+        const label = node.attrs.label ?? node.attrs.id;
+        state.write(`#${label}`);
+      },
+      parse: {
+        setup: (markdownit) => {},
+        updateDOM: (el) => {
+          el.innerHTML = el.innerHTML.replace(
+            /#(\w+)/g,
+            '<span data-type="tag" data-id="1" data-label="$1">#$1</span>'
+          );
+        },
+      },
+    };
+    return {
+      markdown,
+    };
+  },
+
   addKeyboardShortcuts() {
     return {
       Backspace: () =>
@@ -175,6 +197,36 @@ export const TagExtension = Node.create<TagOptions>({
           });
 
           return isMention;
+        }),
+
+      Space: () =>
+        this.editor.commands.command(({ tr, state }) => {
+          const before = state.selection.$from.nodeBefore;
+          const regex = /#(\w+)/g;
+          const match = regex.exec(before?.textContent ?? "");
+          if (match) {
+            const range = {
+              from: state.selection.$from.pos - match[0].length,
+              to: state.selection.$from.pos,
+            };
+            this.editor
+              .chain()
+              .focus()
+              .insertContentAt(range, [
+                {
+                  type: this.name,
+                  attrs: {
+                    id: match[1],
+                    label: match[1],
+                  },
+                },
+                {
+                  type: "text",
+                  text: " ",
+                },
+              ])
+              .run();
+          }
         }),
     };
   },
