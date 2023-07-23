@@ -19,6 +19,7 @@ import { Code } from "@tiptap/extension-code";
 import { Italic } from "@tiptap/extension-italic";
 import { OrderedList } from "@tiptap/extension-ordered-list";
 import { Strike } from "@tiptap/extension-strike";
+import { Image } from "@tiptap/extension-image";
 
 import { lowlight } from "lowlight/lib/core.js";
 
@@ -94,7 +95,7 @@ export const TipTapExtensions = [
   }),
   ListItem.configure({
     HTMLAttributes: {
-      class: "leading-normal -mb-2",
+      class: "leading-normal -mb-5",
     },
   }),
   History,
@@ -105,6 +106,7 @@ export const TipTapExtensions = [
   Typography,
   SlashCommand,
   Color,
+  Image,
   Link.configure({
     HTMLAttributes: {
       class:

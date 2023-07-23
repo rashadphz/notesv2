@@ -12,6 +12,7 @@ import EditorContext from "@/EditorContext";
 import { useReduxDispatch, useReduxSelector } from "@/redux/hooks";
 import { saveNoteAsync } from "@/redux/slices/noteSlice";
 import { EditorState } from "@tiptap/pm/state";
+import { EditorBubbleMenu } from "./bubbleMenu";
 
 export const initEditor = () => {
   const dispatch = useReduxDispatch();
@@ -48,6 +49,7 @@ const NotesEditor = () => {
 
   return (
     <div className="pb-20 relative w-full h-[90%] p-4 px-8 sm:px-12">
+      {editor && <EditorBubbleMenu editor={editor} />}
       <EditorContent editor={editor} />
     </div>
   );

@@ -7,9 +7,20 @@ import {
   deleteNoteAsync,
 } from "@/redux/slices/noteSlice";
 import _ from "lodash";
+import {
+  Heading1Icon,
+  Heading2Icon,
+  Heading3Icon,
+  TypeIcon,
+  BoldIcon,
+  ItalicIcon,
+  StrikethroughIcon,
+  UnderlineIcon,
+  MoonIcon,
+} from "lucide-react";
 
 interface MenuBarItem {
-  icon: string;
+  icon: typeof Heading1Icon;
   title: string;
   action: () => void;
   isActive: () => boolean;
@@ -25,19 +36,12 @@ const MenuItem = ({
 }: MenuBarItem) => {
   return (
     <>
-      <style>{`
-        .menuItem {
-            -webkit-app-region: no-drag;
-        }
-      `}</style>
       <button
         className="menuItem rounded-md disabled:opacity-50 enabled:hover:bg-base-300 w-8 h-8 center"
         onClick={action}
         title={title}
         disabled={isDisabled}
-      >
-        <i className={`text-xl ri-${icon}`}></i>
-      </button>
+      ></button>
     </>
   );
 };
@@ -55,7 +59,7 @@ export const FloatingMenuBar = () => {
   // list of none or more menu bar items
   const items: MenuBarItem[] = [
     {
-      icon: "h-1",
+      icon: Heading1Icon,
       title: "Heading 1",
       action: () =>
         editor.chain().focus().toggleHeading({ level: 1 }).run(),
@@ -63,7 +67,7 @@ export const FloatingMenuBar = () => {
       isDisabled: false,
     },
     {
-      icon: "h-2",
+      icon: Heading2Icon,
       title: "Heading 2",
       action: () =>
         editor.chain().focus().toggleHeading({ level: 2 }).run(),
@@ -71,7 +75,7 @@ export const FloatingMenuBar = () => {
       isDisabled: false,
     },
     {
-      icon: "h-3",
+      icon: Heading3Icon,
       title: "Heading 3",
       action: () =>
         editor.chain().focus().toggleHeading({ level: 3 }).run(),
@@ -79,7 +83,7 @@ export const FloatingMenuBar = () => {
       isDisabled: false,
     },
     {
-      icon: "text",
+      icon: TypeIcon,
       title: "Paragraph",
       action: () =>
         editor
@@ -91,35 +95,35 @@ export const FloatingMenuBar = () => {
       isDisabled: false,
     },
     {
-      icon: "bold",
+      icon: BoldIcon,
       title: "Bold",
       action: () => editor.chain().focus().toggleBold().run(),
       isActive: () => editor.isActive("bold"),
       isDisabled: false,
     },
     {
-      icon: "italic",
+      icon: ItalicIcon,
       title: "Italic",
       action: () => editor.chain().focus().toggleItalic().run(),
       isActive: () => editor.isActive("italic"),
       isDisabled: false,
     },
     {
-      icon: "strikethrough",
+      icon: StrikethroughIcon,
       title: "Strike",
       action: () => editor.chain().focus().toggleStrike().run(),
       isActive: () => editor.isActive("strike"),
       isDisabled: false,
     },
     {
-      icon: "underline",
+      icon: UnderlineIcon,
       title: "Underline",
       action: () => editor.chain().focus().toggleUnderline().run(),
       isActive: () => editor.isActive("underline"),
       isDisabled: false,
     },
     {
-      icon: "moon-line",
+      icon: MoonIcon,
       title: "Dark Mode",
       action: () => {
         setTheme(theme === "light" ? "dark" : "light");
@@ -129,23 +133,22 @@ export const FloatingMenuBar = () => {
     },
   ];
 
-  const groups = _.chunk(items, 4);
+  const groupedItems = _.chunk(items, 4);
 
   return (
-    <div className="border-2 border-base-300 flex items-center justify-between rounded-md p-1">
-      {groups.map((group, index) => (
-        <Fragment key={index}>
-          <div className="flex items-center space-x-2">
-            {group.map((item, index) => (
-              <Fragment key={index}>
-                <MenuItem {...item} />
-              </Fragment>
-            ))}
-          </div>
-          {index < groups.length - 1 && (
-            <div className="w-px h-8 bg-base-300 mx-2"></div>
-          )}
-        </Fragment>
+    <div className="border-2 border-base-300 flex rounded-md p-1 shadow-xl bg-base-100 divide-x divide-base-300 w-auto space-x-4">
+      {groupedItems.map((group, index) => (
+        <div key={index} className="space-x-1 flex">
+          {group.map((item, index) => (
+            <button
+              key={index}
+              onClick={item.action}
+              className="p-2 hover:bg-base-300 active:bg-base-200 rounded-md"
+            >
+              <item.icon className={`w-5 h-5`} />
+            </button>
+          ))}
+        </div>
       ))}
     </div>
   );
