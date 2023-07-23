@@ -1,44 +1,44 @@
-import StarterKit from "@tiptap/starter-kit";
-import HorizontalRule from "@tiptap/extension-horizontal-rule";
-import Link from "@tiptap/extension-link";
-import TiptapImage from "@tiptap/extension-image";
-import Placeholder from "@tiptap/extension-placeholder";
-import TiptapUnderline from "@tiptap/extension-underline";
-import TextStyle from "@tiptap/extension-text-style";
-import { Color } from "@tiptap/extension-color";
-import TaskItem from "@tiptap/extension-task-item";
-import TaskList from "@tiptap/extension-task-list";
-import { Markdown } from "tiptap-markdown";
-import Highlight from "@tiptap/extension-highlight";
-import { ListItem } from "@tiptap/extension-list-item";
-import { Heading } from "@tiptap/extension-heading";
-import Document from "@tiptap/extension-document";
-import Typography from "@tiptap/extension-typography";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
-import { Text } from "@tiptap/extension-text";
-import { Paragraph } from "@tiptap/extension-paragraph";
-import { History } from "@tiptap/extension-history";
+import { Color } from "@tiptap/extension-color";
+import Document from "@tiptap/extension-document";
 import { HardBreak } from "@tiptap/extension-hard-break";
+import { Heading } from "@tiptap/extension-heading";
+import { History } from "@tiptap/extension-history";
+import Link from "@tiptap/extension-link";
+import { ListItem } from "@tiptap/extension-list-item";
+import { Paragraph } from "@tiptap/extension-paragraph";
+import Placeholder from "@tiptap/extension-placeholder";
+import { Text } from "@tiptap/extension-text";
+import TextStyle from "@tiptap/extension-text-style";
+import Typography from "@tiptap/extension-typography";
+import { Markdown } from "tiptap-markdown";
+import { Blockquote } from "@tiptap/extension-blockquote";
+import { Bold } from "@tiptap/extension-bold";
+import { BulletList } from "@tiptap/extension-bullet-list";
+import { Code } from "@tiptap/extension-code";
+import { Italic } from "@tiptap/extension-italic";
+import { OrderedList } from "@tiptap/extension-ordered-list";
+import { Strike } from "@tiptap/extension-strike";
 
 import { lowlight } from "lowlight/lib/core.js";
 
-import css from "highlight.js/lib/languages/css";
-import js from "highlight.js/lib/languages/javascript";
-import ts from "highlight.js/lib/languages/typescript";
-import python from "highlight.js/lib/languages/python";
-import java from "highlight.js/lib/languages/java";
 import cpp from "highlight.js/lib/languages/cpp";
+import css from "highlight.js/lib/languages/css";
+import java from "highlight.js/lib/languages/java";
+import js from "highlight.js/lib/languages/javascript";
+import python from "highlight.js/lib/languages/python";
 import rust from "highlight.js/lib/languages/rust";
+import ts from "highlight.js/lib/languages/typescript";
 
 import {
-  Extension,
   ReactNodeViewRenderer,
   textblockTypeInputRule,
 } from "@tiptap/react";
-import CodeBlockNode from "./nodes/CodeBlockNode";
 import SlashCommand from "./extensions/slash";
 import { TagExtension } from "./extensions/tag";
 import suggestion from "./extensions/tag/suggestion";
+import CodeBlockNode from "./nodes/CodeBlockNode";
+import Underline from "@tiptap/extension-underline";
 
 lowlight.registerLanguage("css", css);
 lowlight.registerLanguage("js", js);
@@ -72,29 +72,31 @@ export const TipTapExtensions = [
   BetterHeading,
   Paragraph,
   HardBreak,
-  //   StarterKit.configure({
-  //     document: false,
-  //     bulletList: {
-  //       HTMLAttributes: {
-  //         class: "list-disc list-outside leading-3 -mt-2",
-  //       },
-  //     },
-  //     orderedList: {
-  //       HTMLAttributes: {
-  //         class: "list-decimal list-outside leading-3 -mt-2",
-  //       },
-  //     },
-  //     listItem: {
-  //       HTMLAttributes: {
-  //         class: "leading-normal -mb-2",
-  //       },
-  //     },
-  //     blockquote: {
-  //       HTMLAttributes: {
-  //         class: "border-l-4 border-base-content",
-  //       },
-  //     },
-  //   }),
+  Bold,
+  Code,
+  Italic,
+  Strike,
+  Underline,
+  Blockquote.configure({
+    HTMLAttributes: {
+      class: "border-l-4 border-base-content",
+    },
+  }),
+  BulletList.configure({
+    HTMLAttributes: {
+      class: "list-disc list-outside leading-3 -mt-2",
+    },
+  }),
+  OrderedList.configure({
+    HTMLAttributes: {
+      class: "list-decimal list-outside leading-3 -mt-2",
+    },
+  }),
+  ListItem.configure({
+    HTMLAttributes: {
+      class: "leading-normal -mb-2",
+    },
+  }),
   History,
   TagExtension.configure({
     suggestion,
