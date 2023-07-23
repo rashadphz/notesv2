@@ -47,7 +47,7 @@ const NotesEditor = () => {
   }, [editor, selectedNote]);
 
   return (
-    <div className="pb-20 relative w-full p-4 px-8 sm:px-12">
+    <div className="pb-20 relative w-full h-[90%] p-4 px-8 sm:px-12">
       <EditorContent editor={editor} />
     </div>
   );
