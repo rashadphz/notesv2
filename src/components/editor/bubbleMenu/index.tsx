@@ -6,6 +6,7 @@ import {
   UnderlineIcon,
   StrikethroughIcon,
   CodeIcon,
+  SparklesIcon,
 } from "lucide-react";
 import { cn } from "@/utils";
 
@@ -59,6 +60,12 @@ export const EditorBubbleMenu: FC<EditorBubbleMenuProps> = (
       command: () => props.editor.chain().focus().toggleCode().run(),
       icon: CodeIcon,
     },
+    {
+      name: "sparkles",
+      isActive: () => props.editor.isActive("sparkles"),
+      command: () => {},
+      icon: SparklesIcon,
+    },
   ];
 
   const bubbleMenuProps: EditorBubbleMenuProps = {
@@ -107,12 +114,12 @@ export const EditorBubbleMenu: FC<EditorBubbleMenuProps> = (
           setIsNodeSelectorOpen(false);
         }}
       /> */}
-      <div className="flex">
+      <div className="flex divide-x divide-base-300">
         {items.map((item, index) => (
           <button
             key={index}
             onClick={item.command}
-            className="p-2 hover:bg-base-300 active:bg-base-200 rounded-md"
+            className="p-3 hover:bg-base-300 active:bg-base-200"
           >
             <item.icon className={cn("h-4 w-4")} />
           </button>
