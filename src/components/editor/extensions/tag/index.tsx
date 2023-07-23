@@ -50,7 +50,6 @@ export const TagExtension = Node.create<TagOptions>({
         char: "#",
         pluginKey: TagPluginKey,
         command: ({ editor, range, props }) => {
-          console.log(range);
           const tag = props;
           const nodeAfter = editor.view.state.selection.$to.nodeAfter;
           const overrideSpace = nodeAfter?.text?.startsWith(" ");
@@ -59,7 +58,6 @@ export const TagExtension = Node.create<TagOptions>({
             range.to += 1;
           }
 
-          console.log(props);
           editor
             .chain()
             .focus()
@@ -101,7 +99,6 @@ export const TagExtension = Node.create<TagOptions>({
   atom: true,
 
   addAttributes() {
-    console.log("addAttributes");
     return {
       id: {
         default: null,
@@ -171,11 +168,7 @@ export const TagExtension = Node.create<TagOptions>({
           state.doc.nodesBetween(anchor - 1, anchor, (node, pos) => {
             if (node.type.name === this.name) {
               isMention = true;
-              tr.insertText(
-                this.options.suggestion.char || "",
-                pos,
-                pos + node.nodeSize
-              );
+              tr.insertText("", pos, pos + node.nodeSize);
 
               return false;
             }
@@ -185,18 +178,6 @@ export const TagExtension = Node.create<TagOptions>({
         }),
     };
   },
-  //   addInputRules() {
-  //     return [
-  //       textblockTypeInputRule({
-  //         find: new RegExp(`^(#\w*)$`),
-  //         type: this.type,
-  //         getAttributes: (match) => {
-  //           const [_, id] = match;
-  //           return { id };
-  //         },
-  //       }),
-  //     ];
-  //   },
 
   addProseMirrorPlugins() {
     return [
