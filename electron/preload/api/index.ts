@@ -18,6 +18,12 @@ declare module "knex/types/tables" {
     created?: number;
     updated?: number;
   }
+  export interface Tag {
+    id: string;
+    name: string;
+    created?: number;
+    updated?: number;
+  }
 
   export interface Tables {
     note: Note;
