@@ -13,7 +13,6 @@ const NotesApi = api.NotesApi;
 
 const titleFromContent = (content: string) => {
   const firstLine = content.split("\n")[0];
-  // remove markdown using the library
   const markdownRemoved = firstLine.replace(/[#*]/g, "");
 
   return markdownRemoved.trim();
@@ -90,7 +89,7 @@ export const noteSlice = createSlice({
     builder.addCase(fetchNotes.fulfilled, (state, action) => {
       NotesAdapter.setAll(state.all, action.payload);
       state.selectedNote =
-        action.payload[action.payload.length - 1] || null;
+        state.all.entities[state.all.ids[0]] || null;
     });
     builder.addCase(createNoteAsync.fulfilled, (state, action) => {
       NotesAdapter.addOne(state.all, action.payload);
