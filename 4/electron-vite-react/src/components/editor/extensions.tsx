@@ -15,6 +15,10 @@ import { Heading } from "@tiptap/extension-heading";
 import Document from "@tiptap/extension-document";
 import Typography from "@tiptap/extension-typography";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
+import { Text } from "@tiptap/extension-text";
+import { Paragraph } from "@tiptap/extension-paragraph";
+import { History } from "@tiptap/extension-history";
+import { HardBreak } from "@tiptap/extension-hard-break";
 
 import { lowlight } from "lowlight/lib/core.js";
 
@@ -26,9 +30,15 @@ import java from "highlight.js/lib/languages/java";
 import cpp from "highlight.js/lib/languages/cpp";
 import rust from "highlight.js/lib/languages/rust";
 
-import { ReactNodeViewRenderer } from "@tiptap/react";
+import {
+  Extension,
+  ReactNodeViewRenderer,
+  textblockTypeInputRule,
+} from "@tiptap/react";
 import CodeBlockNode from "./nodes/CodeBlockNode";
 import SlashCommand from "./extensions/slash";
+import { TagExtension } from "./extensions/tag";
+import suggestion from "./extensions/tag/suggestion";
 
 lowlight.registerLanguage("css", css);
 lowlight.registerLanguage("js", js);
@@ -42,30 +52,55 @@ const HeaderDoc = Document.extend({
   content: "heading block*",
 });
 
+const BetterHeading = Heading.extend({
+  addInputRules() {
+    return this.options.levels.map((level) => {
+      return textblockTypeInputRule({
+        find: new RegExp(`^(#{1,${level}})[ \t]$`), // only match on space, not enter
+        type: this.type,
+        getAttributes: {
+          level,
+        },
+      });
+    });
+  },
+});
+
 export const TipTapExtensions = [
   HeaderDoc,
-  StarterKit.configure({
-    document: false,
-    bulletList: {
-      HTMLAttributes: {
-        class: "list-disc list-outside leading-3 -mt-2",
-      },
+  Text,
+  BetterHeading,
+  Paragraph,
+  HardBreak,
+  //   StarterKit.configure({
+  //     document: false,
+  //     bulletList: {
+  //       HTMLAttributes: {
+  //         class: "list-disc list-outside leading-3 -mt-2",
+  //       },
+  //     },
+  //     orderedList: {
+  //       HTMLAttributes: {
+  //         class: "list-decimal list-outside leading-3 -mt-2",
+  //       },
+  //     },
+  //     listItem: {
+  //       HTMLAttributes: {
+  //         class: "leading-normal -mb-2",
+  //       },
+  //     },
+  //     blockquote: {
+  //       HTMLAttributes: {
+  //         class: "border-l-4 border-base-content",
+  //       },
+  //     },
+  //   }),
+  History,
+  TagExtension.configure({
+    HTMLAttributes: {
+      class: "text-primary-content",
     },
-    orderedList: {
-      HTMLAttributes: {
-        class: "list-decimal list-outside leading-3 -mt-2",
-      },
-    },
-    listItem: {
-      HTMLAttributes: {
-        class: "leading-normal -mb-2",
-      },
-    },
-    blockquote: {
-      HTMLAttributes: {
-        class: "border-l-4 border-base-content",
-      },
-    },
+    suggestion,
   }),
   TextStyle,
   Typography,
@@ -79,7 +114,6 @@ export const TipTapExtensions = [
   }),
   Placeholder.configure({
     emptyNodeClass: "text-base-content opacity-30 is-empty",
-    showOnlyCurrent: false,
     placeholder: ({ node }) => {
       if (node.type.name === "heading" && node.attrs.level === 1) {
         return "Untitled";
@@ -101,7 +135,7 @@ export const TipTapExtensions = [
     lowlight,
   }),
   Markdown.configure({
-    html: false,
+    html: true,
     transformPastedText: true,
     transformCopiedText: true,
     breaks: true,

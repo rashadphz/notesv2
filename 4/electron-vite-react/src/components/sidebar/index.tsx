@@ -30,25 +30,25 @@ const SidebarNote = ({
         <p className={`text-sm line-clamp-1 ${titleWeight}`}>
           {title || "New Note"}
         </p>
+        <p
+          className={`text-xs line-clamp-1 opacity-50 ${contentWeight}`}
+        >
+          {content || "No content"}
+        </p>
         {isSelected && (
           <div className="flex space-x-1">
             <CleaanBadge
               className={`text-xs text-secondary-content bg-primary`}
             >
-              <text>hey</text>
+              hey
             </CleaanBadge>
             <CleaanBadge
               className={`text-xs text-primary-content bg-primary`}
             >
-              <text>👋🏿</text>
+              👋🏿
             </CleaanBadge>
           </div>
         )}
-        {/* <p
-          className={`text-xs line-clamp-1 opacity-50 ${contentWeight}`}
-        >
-          {content || "No content"}
-        </p> */}
       </div>
       <hr className="border-base-300" />
     </div>
