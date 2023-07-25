@@ -20,9 +20,9 @@ module.exports = {
           ...require("daisyui/src/theming/themes")[
             "[data-theme=black]"
           ],
-          "base-100": "#181818",
-          "base-200": "#191919",
-          "base-300": "#222222",
+          "base-100": "#1A191C",
+          "base-200": "#222222",
+          "base-300": "#282828",
         },
       },
       "forest",

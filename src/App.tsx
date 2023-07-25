@@ -51,7 +51,7 @@ function App() {
       <EditorContext.Provider value={editor}>
         <div className="h-screen w-screen flex ">
           <div
-            className={`h-full flex-initial overflow-hidden ${sideBarTransitionClass} bg-base-300`}
+            className={`h-full flex-initial overflow-hidden ${sideBarTransitionClass} bg-base-200`}
           >
             {/* <Resizable
               className={`h-full`}
@@ -82,7 +82,6 @@ function App() {
             </div>
 
             <NotesEditor />
-
             <div className="w-full relative ">
               <div className="absolute mx-auto bottom-[1.5rem] left-0 right-0 w-[360px]">
                 <FloatingMenuBar />
