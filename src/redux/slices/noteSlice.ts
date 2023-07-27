@@ -7,9 +7,9 @@ import {
 } from "@reduxjs/toolkit";
 import { debounce } from "lodash";
 import { RootState } from "../store";
-import { Note } from "knex/types/tables";
+import { Note } from "electron/preload/api/typeorm/entity/Note";
 
-const NotesApi = api.NotesApi;
+const API = api.API;
 
 const titleFromContent = (content: string) => {
   const firstLine = content.split("\n")[0];
@@ -21,21 +21,20 @@ const titleFromContent = (content: string) => {
 export const fetchNotes = createAsyncThunk<Note[], void>(
   "notes/fetchNotes",
   async (_, { getState }) => {
-    return await NotesApi.fetchNotes();
+    return await API.allNotes();
   }
 );
 
 export const createNoteAsync = createAsyncThunk<Note, void>(
   "notes/createNote",
   async (_, { getState }) => {
-    return await NotesApi.createNote();
+    return await API.createNote();
   }
 );
 
 export const deleteNoteAsync = createAsyncThunk<string, string>(
   "notes/deleteNote",
   async (id, { getState }) => {
-    await NotesApi.deleteNote(id);
     return id;
   }
 );
@@ -44,23 +43,20 @@ export const saveNoteAsync = createAsyncThunk<Note, Note>(
   "notes/saveNote",
   async (note, { getState }) => {
     const { id, title, ...updates } = note;
+
     const parsedTitle = titleFromContent(note.content);
 
-    return (
-      (await NotesApi.saveNote(id, {
-        title: parsedTitle,
-        ...updates,
-      })) || note
-    );
+    return await API.updateNote(id, {
+      title: parsedTitle,
+      ...updates,
+    });
   }
 );
 
 const NotesAdapter = createEntityAdapter<Note>({
   selectId: (note) => note.id,
   sortComparer: (a, b) => {
-    if (b.updated === undefined) return -1;
-    if (a.updated === undefined) return 1;
-    return b.updated - a.updated;
+    return b.updatedAt - a.updatedAt;
   },
 });
 
