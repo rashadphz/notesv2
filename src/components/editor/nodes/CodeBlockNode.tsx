@@ -1,14 +1,14 @@
 import { NodeViewContent, NodeViewWrapper } from "@tiptap/react";
 import React from "react";
-// import "highlight.js/styles/github-dark-dimmed.css";
+import "highlight.js/styles/github-dark-dimmed.css";
 // import "highlight.js/styles/github.css";
-import "highlight.js/styles/grayscale.css";
+// import "highlight.js/styles/grayscale.css";
 import CleaanBadge from "@/components/CleaanBadge";
 
 const CodeBlock = ({ children }: any) => {
   return (
     <pre
-      className="p-5 font-mono font-medium rounded-lg border-[2px] border-base-300 opacity-80"
+      className="p-5 font-mono font-medium rounded-lg border-[2px] border-base-300 bg-base-200 opacity-80"
       spellCheck="false"
     >
       {children}

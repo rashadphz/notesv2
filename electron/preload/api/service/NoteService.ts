@@ -35,6 +35,7 @@ export default class NoteServiceImpl implements NoteService {
     const note = new Note();
     note.title = "";
     note.content = "";
+    note.tags = [];
     const created = await this.noteRepo.save(note);
     return created;
   }
