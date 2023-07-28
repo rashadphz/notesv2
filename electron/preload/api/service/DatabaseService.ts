@@ -14,7 +14,7 @@ export default class DatabaseServiceImpl implements DatabaseService {
   constructor() {
     this.appDataSource = new DataSource({
       type: "better-sqlite3",
-      database: "app.sqlite",
+      database: "dev.sqlite",
       entities: [Note, Tag],
       synchronize: true,
     });

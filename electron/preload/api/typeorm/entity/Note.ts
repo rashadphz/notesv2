@@ -52,7 +52,10 @@ export class Note {
   })
   deletedAt!: number | null;
 
-  @ManyToMany(() => Tag, (tag) => tag.notes, { cascade: true })
+  @ManyToMany(() => Tag, (tag) => tag.notes, {
+    cascade: true,
+    eager: true,
+  })
   @JoinTable({
     name: "note_tag",
     joinColumn: {

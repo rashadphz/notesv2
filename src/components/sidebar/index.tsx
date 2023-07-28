@@ -5,9 +5,9 @@ import {
   selectNote,
 } from "@/redux/slices/noteSlice";
 import React, { useEffect } from "react";
-import { Note } from "knex/types/tables";
 import CleaanBadge from "../CleaanBadge";
 import { random } from "lodash";
+import { Note } from "electron/preload/api/typeorm/entity/Note";
 
 interface SidebarNoteProps extends Note {
   isSelected: boolean;
@@ -15,6 +15,7 @@ interface SidebarNoteProps extends Note {
 const SidebarNote = ({
   title,
   content,
+  tags,
   isSelected,
 }: SidebarNoteProps) => {
   const titleWeight = isSelected ? "font-bold" : "font-medium";
@@ -37,16 +38,14 @@ const SidebarNote = ({
         </p>
         {isSelected && (
           <div className="flex space-x-1">
-            <CleaanBadge
-              className={`text-xs text-secondary-content bg-primary`}
-            >
-              hey
-            </CleaanBadge>
-            <CleaanBadge
-              className={`text-xs text-primary-content bg-primary`}
-            >
-              👋🏿
-            </CleaanBadge>
+            {tags.map((tag) => (
+              <CleaanBadge
+                key={tag.id}
+                className={`text-xs text-primary-content bg-primary`}
+              >
+                {tag.name}
+              </CleaanBadge>
+            ))}
           </div>
         )}
       </div>

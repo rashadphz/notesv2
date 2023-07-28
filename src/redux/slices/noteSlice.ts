@@ -18,6 +18,13 @@ const titleFromContent = (content: string) => {
   return markdownRemoved.trim();
 };
 
+const tagsFromContent = (content: string) => {
+  const tagRegex = /#(\w+)/g;
+  const matches = content.matchAll(tagRegex);
+  const tags = Array.from(matches, (match) => match[1]);
+  return tags;
+};
+
 export const fetchNotes = createAsyncThunk<Note[], void>(
   "notes/fetchNotes",
   async (_, { getState }) => {
@@ -45,10 +52,14 @@ export const saveNoteAsync = createAsyncThunk<Note, Note>(
     const { id, title, ...updates } = note;
 
     const parsedTitle = titleFromContent(note.content);
+    const parsedTags = tagsFromContent(note.content).map((name) => {
+      return { name };
+    });
 
     return await API.updateNote(id, {
       title: parsedTitle,
       ...updates,
+      tags: parsedTags,
     });
   }
 );
