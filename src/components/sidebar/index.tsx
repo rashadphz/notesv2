@@ -36,18 +36,16 @@ const SidebarNote = ({
         >
           {content || "No content"}
         </p>
-        {isSelected && (
-          <div className="flex space-x-1">
-            {tags.map((tag) => (
-              <CleaanBadge
-                key={tag.id}
-                className={`text-sm text-primary-content bg-primary`}
-              >
-                {tag.name}
-              </CleaanBadge>
-            ))}
-          </div>
-        )}
+        <div className="flex space-x-1">
+          {tags.map((tag) => (
+            <CleaanBadge
+              key={tag.id}
+              className={`text-xs text-primary-content bg-primary`}
+            >
+              {tag.name}
+            </CleaanBadge>
+          ))}
+        </div>
       </div>
       <hr className="border-base-300" />
     </div>
