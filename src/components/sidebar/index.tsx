@@ -41,7 +41,7 @@ const SidebarNote = ({
             {tags.map((tag) => (
               <CleaanBadge
                 key={tag.id}
-                className={`text-xs text-primary-content bg-primary`}
+                className={`text-sm text-primary-content bg-primary`}
               >
                 {tag.name}
               </CleaanBadge>

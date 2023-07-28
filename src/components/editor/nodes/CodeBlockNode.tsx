@@ -28,7 +28,7 @@ const LanguageSelector = ({
   onChange,
 }: LanguageSelectorProps) => {
   return (
-    <CleaanBadge className="text-sm mx-[1px] top-[1px] bg-content-focus absolute cursor-pointer ">
+    <CleaanBadge className="text-md mx-[1px] top-[1px] bg-content-focus absolute cursor-pointer ">
       <select className="outline-none appearance-none bg-transparent border-none p-0 m-0 w-fit font-inherit font-inherit cursor-inherit line-inherit cursor-pointer min-w-0">
         {languages.map((lang, index) => (
           <option key={index} value={lang}>

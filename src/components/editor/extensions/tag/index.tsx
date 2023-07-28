@@ -8,7 +8,6 @@ import {
   textblockTypeInputRule,
 } from "@tiptap/react";
 import Suggestion, { SuggestionOptions } from "@tiptap/suggestion";
-import { Tag } from "knex/types/tables";
 import { MarkdownNodeSpec } from "tiptap-markdown";
 
 export type TagOptions = {
@@ -25,7 +24,7 @@ export const TagPluginKey = new PluginKey("tag");
 export const TagNode = ({ node }: any) => {
   return (
     <NodeViewWrapper as="span" className="whitespace-nowrap">
-      <CleaanBadge className="hover:cursor-pointer text-xs text-secondary-content bg-primary">
+      <CleaanBadge className="hover:cursor-pointer text-md text-secondary-content bg-primary">
         {node.attrs.label ?? node.attrs.id}
       </CleaanBadge>
     </NodeViewWrapper>
