@@ -13,6 +13,7 @@ import { useReduxDispatch, useReduxSelector } from "@/redux/hooks";
 import { saveNoteAsync } from "@/redux/slices/noteSlice";
 import { EditorState } from "@tiptap/pm/state";
 import { EditorBubbleMenu } from "./bubbleMenu";
+import { debounce } from "lodash";
 
 export const initEditor = () => {
   const dispatch = useReduxDispatch();
@@ -22,12 +23,19 @@ export const initEditor = () => {
 
   useEffect(() => {}, [selectedNote]);
 
+  const debouncedSave = useCallback(
+    debounce((note) => {
+      dispatch(saveNoteAsync(note));
+    }, 1000),
+    []
+  );
+
   return useEditor({
     onUpdate: ({ editor }) => {
       if (!selectedNote) return;
 
       const markdown = editor.storage.markdown.getMarkdown();
-      dispatch(saveNoteAsync({ ...selectedNote, content: markdown }));
+      debouncedSave({ ...selectedNote, content: markdown });
     },
     extensions: TipTapExtensions,
     editorProps: TipTapProps,
