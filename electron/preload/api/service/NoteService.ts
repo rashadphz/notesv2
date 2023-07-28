@@ -2,12 +2,12 @@ import { inject, injectable } from "inversify";
 import { INJECTIONS } from "../injections";
 import { Note } from "../typeorm/entity/Note";
 import DatabaseService from "./DatabaseService";
-import { Repository } from "typeorm";
+import { DeepPartial, Repository } from "typeorm";
 
 export interface NoteService {
   findAll(): Promise<Note[]>;
   create(): Promise<Note>;
-  update(id: string, updates: Partial<Note>): Promise<Note>;
+  update(id: string, updates: DeepPartial<Note>): Promise<Note>;
 }
 
 @injectable()
@@ -22,9 +22,7 @@ export default class NoteServiceImpl implements NoteService {
   }
 
   async findAll(): Promise<Note[]> {
-    console.log("findAll");
     const notes = await this.repository.find();
-    console.log("notes", notes);
     return notes;
   }
 
@@ -36,12 +34,16 @@ export default class NoteServiceImpl implements NoteService {
     return created;
   }
 
-  async update(id: string, updates: Partial<Note>): Promise<Note> {
-    const { title, content } = updates;
+  async update(
+    id: string,
+    updates: DeepPartial<Note>
+  ): Promise<Note> {
+    const { title, content, tags } = updates;
     const updated = await this.repository.save({
       id,
       title,
       content,
+      tags,
     });
     return updated;
   }

@@ -1,3 +1,4 @@
+import { DeepPartial } from "typeorm";
 import { INJECTIONS } from "./injections";
 import { container } from "./inversify.config";
 import { NoteService } from "./service/NoteService";
@@ -15,7 +16,7 @@ const noteServ = container.get<NoteService>(INJECTIONS.NoteService);
 const API = {
   allNotes: async () => await noteServ.findAll(),
   createNote: async () => await noteServ.create(),
-  updateNote: async (id: string, updates: Partial<Note>) =>
+  updateNote: async (id: string, updates: DeepPartial<Note>) =>
     noteServ.update(id, updates),
 };
 

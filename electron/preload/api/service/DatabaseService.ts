@@ -1,6 +1,7 @@
 import { DataSource, EntityManager } from "typeorm";
 import { Note } from "../typeorm/entity/Note";
 import { injectable } from "inversify";
+import { Tag } from "../typeorm/entity/Tag";
 
 export interface DatabaseService {
   initialize(): Promise<void>;
@@ -14,7 +15,7 @@ export default class DatabaseServiceImpl implements DatabaseService {
     this.appDataSource = new DataSource({
       type: "better-sqlite3",
       database: "app.sqlite",
-      entities: [Note],
+      entities: [Note, Tag],
       synchronize: true,
     });
   }

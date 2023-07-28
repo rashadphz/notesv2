@@ -5,9 +5,12 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   DeleteDateColumn,
+  ManyToMany,
+  JoinTable,
 } from "typeorm";
 
 import moment from "moment";
+import { Tag } from "./Tag";
 
 @Entity()
 export class Note {
@@ -48,4 +51,18 @@ export class Note {
     type: "datetime",
   })
   deletedAt!: number | null;
+
+  @ManyToMany(() => Tag, (tag) => tag.notes, { cascade: true })
+  @JoinTable({
+    name: "note_tag",
+    joinColumn: {
+      name: "noteId",
+      referencedColumnName: "id",
+    },
+    inverseJoinColumn: {
+      name: "tagId",
+      referencedColumnName: "id",
+    },
+  })
+  tags!: Tag[];
 }
