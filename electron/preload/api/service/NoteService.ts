@@ -2,13 +2,14 @@ import { inject, injectable } from "inversify";
 import { INJECTIONS } from "../injections";
 import { Note } from "../typeorm/entity/Note";
 import DatabaseService from "./DatabaseService";
-import { DeepPartial, In, Repository } from "typeorm";
+import { DeepPartial, In, Repository, Like } from "typeorm";
 import { Tag } from "../typeorm/entity/Tag";
 
 export interface NoteService {
   findAll(): Promise<Note[]>;
   create(): Promise<Note>;
   update(id: string, updates: DeepPartial<Note>): Promise<Note>;
+  searchTags(query: string): Promise<Tag[]>;
 }
 
 @injectable()
@@ -40,6 +41,17 @@ export default class NoteServiceImpl implements NoteService {
     return created;
   }
 
+  deleteUnusedTags() {
+    const query = this.tagRepo
+      .createQueryBuilder("tag")
+      .leftJoinAndSelect("tag.notes", "note")
+      .where("note.id IS NULL");
+
+    query.getMany().then((tags) => {
+      this.tagRepo.remove(tags);
+    });
+  }
+
   async update(
     id: string,
     updates: DeepPartial<Note>
@@ -67,6 +79,17 @@ export default class NoteServiceImpl implements NoteService {
       content,
       tags: allTags,
     });
+
+    this.deleteUnusedTags();
     return note;
+  }
+
+  async searchTags(query: string): Promise<Tag[]> {
+    const tags = await this.tagRepo.find({
+      where: {
+        name: Like(`%${query}%`),
+      },
+    });
+    return tags;
   }
 }
