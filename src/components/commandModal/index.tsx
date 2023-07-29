@@ -13,6 +13,8 @@ import {
 import { useReduxDispatch, useReduxSelector } from "@/redux/hooks";
 import { useTheme } from "@/theme/useTheme";
 import { cn } from "@/utils";
+import { API } from "@/redux/slices/noteSlice";
+import { Note } from "electron/preload/api/typeorm/entity/Note";
 
 const projects = [
   {
@@ -56,14 +58,12 @@ const CommandModal = () => {
     };
   }, [open]);
 
-  const filteredProjects =
-    rawQuery === "#"
-      ? projects
-      : query === "" || rawQuery.startsWith(">")
-      ? []
-      : projects.filter((project) =>
-          project.name.toLowerCase().includes(query)
-        );
+  const [notes, setNotes] = useState<Note[]>([]);
+  useEffect(() => {
+    API.searchNotes(rawQuery).then((notes) => {
+      setNotes(notes);
+    });
+  }, [rawQuery]);
 
   const filteredUsers =
     rawQuery === ">"
@@ -127,22 +127,21 @@ const CommandModal = () => {
                   />
                 </div>
 
-                {(filteredProjects.length > 0 ||
-                  filteredUsers.length > 0) && (
+                {(notes.length > 0 || filteredUsers.length > 0) && (
                   <Combobox.Options
                     static
                     className="max-h-80 scroll-py-10 scroll-pb-2 space-y-4 overflow-y-auto p-4 pb-2"
                   >
-                    {filteredProjects.length > 0 && (
+                    {notes.length > 0 && (
                       <li>
                         <h2 className="text-xs font-semibold text-base-content">
                           Projects
                         </h2>
                         <ul className="-mx-4 mt-2 text-sm text-base-content text-opacity-90">
-                          {filteredProjects.map((project) => (
+                          {notes.map((note) => (
                             <Combobox.Option
-                              key={project.id}
-                              value={project}
+                              key={note.id}
+                              value={note}
                               className={({ active }) =>
                                 cn(
                                   "flex cursor-default select-none items-center px-4 py-2",
@@ -159,7 +158,7 @@ const CommandModal = () => {
                                     aria-hidden="true"
                                   />
                                   <span className="ml-3 flex-auto truncate">
-                                    {project.name}
+                                    {note.title}
                                   </span>
                                 </>
                               )}
@@ -192,7 +191,7 @@ const CommandModal = () => {
 
                 {query !== "" &&
                   rawQuery !== "?" &&
-                  filteredProjects.length === 0 &&
+                  notes.length === 0 &&
                   filteredUsers.length === 0 && (
                     <div className="px-6 py-14 text-center text-sm sm:px-14">
                       <ExclamationTriangleIcon

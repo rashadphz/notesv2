@@ -18,6 +18,7 @@ const API = {
   createNote: async () => noteServ.create(),
   updateNote: async (id: string, updates: DeepPartial<Note>) =>
     noteServ.update(id, updates),
+  searchNotes: async (query: string) => noteServ.searchNotes(query),
   searchTags: async (query: string) => noteServ.searchTags(query),
 };
 

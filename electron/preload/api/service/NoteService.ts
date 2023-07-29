@@ -10,6 +10,7 @@ export interface NoteService {
   create(): Promise<Note>;
   update(id: string, updates: DeepPartial<Note>): Promise<Note>;
   searchTags(query: string): Promise<Tag[]>;
+  searchNotes(query: string): Promise<Note[]>;
 }
 
 @injectable()
@@ -91,5 +92,19 @@ export default class NoteServiceImpl implements NoteService {
       },
     });
     return tags;
+  }
+
+  async searchNotes(query: string): Promise<Note[]> {
+    const notes = await this.noteRepo.find({
+      where: [
+        {
+          title: Like(`%${query}%`),
+        },
+        {
+          content: Like(`%${query}%`),
+        },
+      ],
+    });
+    return notes;
   }
 }
