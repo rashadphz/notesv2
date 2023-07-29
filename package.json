@@ -19,6 +19,8 @@
     "e2e": "playwright test"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.16",
+    "@heroicons/react": "^2.0.18",
     "@reduxjs/toolkit": "^1.9.5",
     "@tiptap/core": "^2.0.4",
     "@tiptap/extension-blockquote": "^2.0.4",
@@ -83,6 +85,7 @@
     "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
     "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
     "@playwright/test": "^1.32.0",
+    "@tailwindcss/forms": "^0.5.4",
     "@tailwindcss/typography": "^0.5.9",
     "@types/lodash": "^4.14.195",
     "@types/react": "^18.0.28",

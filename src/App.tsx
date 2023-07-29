@@ -5,6 +5,7 @@ import Sidebar from "./components/sidebar";
 import { useEffect, useState } from "react";
 import { FloatingMenuBar } from "./components/titlebar/floatingMenuBar";
 import clsx from "clsx";
+import CommandModal from "./components/commandModal";
 
 interface ButtonProps {
   onClick: () => void;
@@ -91,6 +92,7 @@ function App() {
             </div>
           </div>
         </div>
+        <CommandModal />
       </EditorContext.Provider>
     )
   );

@@ -14,10 +14,11 @@ import { Note } from "./typeorm/entity/Note";
 const noteServ = container.get<NoteService>(INJECTIONS.NoteService);
 
 const API = {
-  allNotes: async () => await noteServ.findAll(),
-  createNote: async () => await noteServ.create(),
+  allNotes: async () => noteServ.findAll(),
+  createNote: async () => noteServ.create(),
   updateNote: async (id: string, updates: DeepPartial<Note>) =>
     noteServ.update(id, updates),
+  searchTags: async (query: string) => noteServ.searchTags(query),
 };
 
 export default { API };
