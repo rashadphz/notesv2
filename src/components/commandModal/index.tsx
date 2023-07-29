@@ -2,8 +2,8 @@ import { Fragment, useEffect, useState } from "react";
 import { Combobox, Dialog, Transition } from "@headlessui/react";
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import {
+  DocumentIcon,
   ExclamationTriangleIcon,
-  FolderIcon,
   LifebuoyIcon,
 } from "@heroicons/react/24/outline";
 import {
@@ -15,27 +15,6 @@ import { useTheme } from "@/theme/useTheme";
 import { cn } from "@/utils";
 import { API, selectNote } from "@/redux/slices/noteSlice";
 import { Note } from "electron/preload/api/typeorm/entity/Note";
-
-const projects = [
-  {
-    id: 1,
-    name: "Workflow Inc. / Website Redesign",
-    category: "Projects",
-    url: "#",
-  },
-  // More projects...
-];
-
-const users = [
-  {
-    id: 1,
-    name: "Leslie Alexander",
-    url: "#",
-    imageUrl:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-  },
-  // More users...
-];
 
 const CommandModal = () => {
   const { theme } = useTheme();
@@ -69,15 +48,6 @@ const CommandModal = () => {
       setNotes(notes);
     });
   }, [rawQuery]);
-
-  const filteredUsers =
-    rawQuery === ">"
-      ? users
-      : query === "" || rawQuery.startsWith("#")
-      ? []
-      : users.filter((user) =>
-          user.name.toLowerCase().includes(query)
-        );
 
   return (
     <Transition.Root
@@ -130,7 +100,7 @@ const CommandModal = () => {
                   />
                 </div>
 
-                {(notes.length > 0 || filteredUsers.length > 0) && (
+                {notes.length > 0 && (
                   <Combobox.Options
                     static
                     className="max-h-80 scroll-py-10 scroll-pb-2 space-y-4 overflow-y-auto p-4 pb-2"
@@ -138,29 +108,29 @@ const CommandModal = () => {
                     {notes.length > 0 && (
                       <li>
                         <h2 className="text-xs font-semibold text-base-content">
-                          Projects
+                          Recents
                         </h2>
-                        <ul className="-mx-4 mt-2 text-sm text-base-content text-opacity-90">
+                        <ul className="-mx-4 mt-2 text-md text-base-content text-opacity-90">
                           {notes.map((note) => (
                             <Combobox.Option
                               key={note.id}
                               value={note}
                               className={({ active }) =>
                                 cn(
-                                  "flex cursor-default select-none items-center px-4 py-2",
+                                  "flex cursor-default select-none items-center px-4 py-1",
                                   active && "bg-base-300"
                                 )
                               }
                             >
                               {({ active }) => (
                                 <>
-                                  <FolderIcon
+                                  <DocumentIcon
                                     className={cn(
-                                      "h-6 w-6 flex-none"
+                                      "h-5 w-5 flex-none"
                                     )}
                                     aria-hidden="true"
                                   />
-                                  <span className="ml-3 flex-auto truncate">
+                                  <span className="ml-2 flex-auto truncate">
                                     {note.title}
                                   </span>
                                 </>
@@ -194,8 +164,7 @@ const CommandModal = () => {
 
                 {query !== "" &&
                   rawQuery !== "?" &&
-                  notes.length === 0 &&
-                  filteredUsers.length === 0 && (
+                  notes.length === 0 && (
                     <div className="px-6 py-14 text-center text-sm sm:px-14">
                       <ExclamationTriangleIcon
                         className="mx-auto h-6 w-6 opacity-50"
