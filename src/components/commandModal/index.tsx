@@ -180,46 +180,27 @@ const CommandModal = () => {
                     </div>
                   )}
 
-                <div className="flex flex-wrap items-center bg-base-200 px-4 py-2.5 text-xs">
-                  <span className="opacity-60">Type </span>
-                  <kbd
-                    className={cn(
-                      "mx-1 flex h-5 w-5 items-center justify-center rounded border bg-base-200 font-semibold sm:mx-2",
-                      rawQuery.startsWith("#")
-                        ? "border-base-200 text-base-200"
-                        : "border-gray-400 text-base-content"
-                    )}
-                  >
-                    #
-                  </kbd>{" "}
-                  <span className="sm:hidden opacity-60">
-                    for projects,
-                  </span>
-                  <span className="hidden sm:inline opacity-60">
-                    to access projects,
-                  </span>
-                  <kbd
-                    className={cn(
-                      "mx-1 flex h-5 w-5 items-center justify-center rounded border bg-base-200 font-semibold sm:mx-2",
-                      rawQuery.startsWith(">")
-                        ? "border-base-200 text-base-200"
-                        : "border-gray-400 text-base-content"
-                    )}
-                  >
-                    &gt;
-                  </kbd>{" "}
-                  <span className="opacity-60">for users,</span>{" "}
-                  <kbd
-                    className={cn(
-                      "mx-1 flex h-5 w-5 items-center justify-center rounded border bg-base-200 font-semibold sm:mx-2",
-                      rawQuery === "?"
-                        ? "border-base-200 text-base-200"
-                        : "border-gray-400 text-base-content"
-                    )}
-                  >
-                    ?
-                  </kbd>{" "}
-                  <span className="opacity-60">for help.</span>
+                <div className="flex flex-wrap justify-between items-center bg-base-100 px-4 py-2.5 text-xs">
+                  <div className="flex items-center">
+                    <span className="opacity-60">Suggestions </span>
+                    <kbd
+                      className={cn(
+                        "mx-1 flex h-5 w-5 items-center justify-center rounded border border-base-100 bg-base-300 font-semibold sm:mx-2 text-base-content opacity-70 px-4"
+                      )}
+                    >
+                      TAB
+                    </kbd>
+                  </div>
+                  <div className="flex items-center">
+                    <span>Open</span>
+                    <kbd
+                      className={cn(
+                        "mx-1 flex h-5 w-5 items-center justify-center rounded border border-base-100 bg-base-300 font-semibold sm:mx-2 text-base-content opacity-70"
+                      )}
+                    >
+                      ↵
+                    </kbd>
+                  </div>
                 </div>
               </Combobox>
             </Dialog.Panel>
