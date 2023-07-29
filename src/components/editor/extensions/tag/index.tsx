@@ -25,7 +25,7 @@ export const TagPluginKey = new PluginKey("tag");
 export const TagNode = ({ node }: any) => {
   return (
     <NodeViewWrapper as="span" className="whitespace-nowrap">
-      <CleaanBadge className="hover:cursor-pointer text-md text-secondary-content bg-primary">
+      <CleaanBadge className="hover:cursor-pointer text-md text-accent-content bg-primary">
         {node.attrs.label ?? node.attrs.id}
       </CleaanBadge>
     </NodeViewWrapper>

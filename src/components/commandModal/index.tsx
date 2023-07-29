@@ -11,6 +11,8 @@ import {
   handleOpen,
 } from "@/redux/slices/commandModalSlice";
 import { useReduxDispatch, useReduxSelector } from "@/redux/hooks";
+import { useTheme } from "@/theme/useTheme";
+import { cn } from "@/utils";
 
 const projects = [
   {
@@ -33,11 +35,8 @@ const users = [
   // More users...
 ];
 
-function classNames(...classes: any[]) {
-  return classes.filter(Boolean).join(" ");
-}
-
 const CommandModal = () => {
+  const { theme } = useTheme();
   const [rawQuery, setRawQuery] = useState("");
   const query = rawQuery.toLowerCase().replace(/^[#>]/, "");
 
@@ -81,6 +80,7 @@ const CommandModal = () => {
       as={Fragment}
       afterLeave={() => setRawQuery("")}
       appear
+      data-theme={theme}
     >
       <Dialog
         as="div"
@@ -109,17 +109,17 @@ const CommandModal = () => {
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
           >
-            <Dialog.Panel className="mx-auto max-w-xl transform divide-y divide-gray-100 overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-black ring-opacity-5 transition-all">
+            <Dialog.Panel className="mx-auto max-w-xl transform divide-y divide-base-300 overflow-hidden rounded-xl bg-base-100 shadow-2xl ring-1 ring-black ring-opacity-5 transition-all">
               <Combobox
-                onChange={(item) => (window.location = item.url)}
+                onChange={(item: any) => (window.location = item.url)}
               >
                 <div className="relative">
                   <MagnifyingGlassIcon
-                    className="pointer-events-none absolute left-4 top-3.5 h-5 w-5 text-gray-400"
+                    className="pointer-events-none absolute left-4 top-3.5 h-5 w-5 opacity-50"
                     aria-hidden="true"
                   />
                   <Combobox.Input
-                    className="h-12 w-full border-0 bg-transparent pl-11 pr-4 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm"
+                    className="h-12 w-full border-0 bg-transparent pl-11 pr-4 text-base-content placeholder:opacity-50 focus:ring-0 sm:text-sm"
                     placeholder="Search..."
                     onChange={(event) =>
                       setRawQuery(event.target.value)
@@ -135,29 +135,26 @@ const CommandModal = () => {
                   >
                     {filteredProjects.length > 0 && (
                       <li>
-                        <h2 className="text-xs font-semibold text-gray-900">
+                        <h2 className="text-xs font-semibold text-base-content">
                           Projects
                         </h2>
-                        <ul className="-mx-4 mt-2 text-sm text-gray-700">
+                        <ul className="-mx-4 mt-2 text-sm text-base-content text-opacity-90">
                           {filteredProjects.map((project) => (
                             <Combobox.Option
                               key={project.id}
                               value={project}
                               className={({ active }) =>
-                                classNames(
+                                cn(
                                   "flex cursor-default select-none items-center px-4 py-2",
-                                  active && "bg-indigo-600 text-white"
+                                  active && "bg-base-300"
                                 )
                               }
                             >
                               {({ active }) => (
                                 <>
                                   <FolderIcon
-                                    className={classNames(
-                                      "h-6 w-6 flex-none",
-                                      active
-                                        ? "text-white"
-                                        : "text-gray-400"
+                                    className={cn(
+                                      "h-6 w-6 flex-none"
                                     )}
                                     aria-hidden="true"
                                   />
@@ -171,46 +168,16 @@ const CommandModal = () => {
                         </ul>
                       </li>
                     )}
-                    {filteredUsers.length > 0 && (
-                      <li>
-                        <h2 className="text-xs font-semibold text-gray-900">
-                          Users
-                        </h2>
-                        <ul className="-mx-4 mt-2 text-sm text-gray-700">
-                          {filteredUsers.map((user) => (
-                            <Combobox.Option
-                              key={user.id}
-                              value={user}
-                              className={({ active }) =>
-                                classNames(
-                                  "flex cursor-default select-none items-center px-4 py-2",
-                                  active && "bg-indigo-600 text-white"
-                                )
-                              }
-                            >
-                              <img
-                                src={user.imageUrl}
-                                alt=""
-                                className="h-6 w-6 flex-none rounded-full"
-                              />
-                              <span className="ml-3 flex-auto truncate">
-                                {user.name}
-                              </span>
-                            </Combobox.Option>
-                          ))}
-                        </ul>
-                      </li>
-                    )}
                   </Combobox.Options>
                 )}
 
                 {rawQuery === "?" && (
                   <div className="px-6 py-14 text-center text-sm sm:px-14">
                     <LifebuoyIcon
-                      className="mx-auto h-6 w-6 text-gray-400"
+                      className="mx-auto h-6 w-6 opacity-50"
                       aria-hidden="true"
                     />
-                    <p className="mt-4 font-semibold text-gray-900">
+                    <p className="mt-4 font-semibold text-base-content">
                       Help with searching
                     </p>
                     <p className="mt-2 text-gray-500">
@@ -229,10 +196,10 @@ const CommandModal = () => {
                   filteredUsers.length === 0 && (
                     <div className="px-6 py-14 text-center text-sm sm:px-14">
                       <ExclamationTriangleIcon
-                        className="mx-auto h-6 w-6 text-gray-400"
+                        className="mx-auto h-6 w-6 opacity-50"
                         aria-hidden="true"
                       />
-                      <p className="mt-4 font-semibold text-gray-900">
+                      <p className="mt-4 font-semibold text-base-content">
                         No results found
                       </p>
                       <p className="mt-2 text-gray-500">
@@ -242,44 +209,46 @@ const CommandModal = () => {
                     </div>
                   )}
 
-                <div className="flex flex-wrap items-center bg-gray-50 px-4 py-2.5 text-xs text-gray-700">
-                  Type{" "}
+                <div className="flex flex-wrap items-center bg-base-200 px-4 py-2.5 text-xs">
+                  <span className="opacity-60">Type </span>
                   <kbd
-                    className={classNames(
-                      "mx-1 flex h-5 w-5 items-center justify-center rounded border bg-white font-semibold sm:mx-2",
+                    className={cn(
+                      "mx-1 flex h-5 w-5 items-center justify-center rounded border bg-base-200 font-semibold sm:mx-2",
                       rawQuery.startsWith("#")
-                        ? "border-indigo-600 text-indigo-600"
-                        : "border-gray-400 text-gray-900"
+                        ? "border-base-200 text-base-200"
+                        : "border-gray-400 text-base-content"
                     )}
                   >
                     #
                   </kbd>{" "}
-                  <span className="sm:hidden">for projects,</span>
-                  <span className="hidden sm:inline">
+                  <span className="sm:hidden opacity-60">
+                    for projects,
+                  </span>
+                  <span className="hidden sm:inline opacity-60">
                     to access projects,
                   </span>
                   <kbd
-                    className={classNames(
-                      "mx-1 flex h-5 w-5 items-center justify-center rounded border bg-white font-semibold sm:mx-2",
+                    className={cn(
+                      "mx-1 flex h-5 w-5 items-center justify-center rounded border bg-base-200 font-semibold sm:mx-2",
                       rawQuery.startsWith(">")
-                        ? "border-indigo-600 text-indigo-600"
-                        : "border-gray-400 text-gray-900"
+                        ? "border-base-200 text-base-200"
+                        : "border-gray-400 text-base-content"
                     )}
                   >
                     &gt;
                   </kbd>{" "}
-                  for users, and{" "}
+                  <span className="opacity-60">for users,</span>{" "}
                   <kbd
-                    className={classNames(
-                      "mx-1 flex h-5 w-5 items-center justify-center rounded border bg-white font-semibold sm:mx-2",
+                    className={cn(
+                      "mx-1 flex h-5 w-5 items-center justify-center rounded border bg-base-200 font-semibold sm:mx-2",
                       rawQuery === "?"
-                        ? "border-indigo-600 text-indigo-600"
-                        : "border-gray-400 text-gray-900"
+                        ? "border-base-200 text-base-200"
+                        : "border-gray-400 text-base-content"
                     )}
                   >
                     ?
                   </kbd>{" "}
-                  for help.
+                  <span className="opacity-60">for help.</span>
                 </div>
               </Combobox>
             </Dialog.Panel>
