@@ -64,12 +64,14 @@ function App() {
                 onClick={() => setSidebarVisible(false)}
               />
             </div>
-            <Sidebar />
+            <div className="h-full overflow-y-scroll scrollbar-hide">
+              <Sidebar />
+            </div>
             {/* </Resizable> */}
           </div>
 
           <div
-            className={`h-screen overflow-y-scroll w-full max-w-[70ch] mx-auto ${mainContentTransitionClass}`}
+            className={`h-screen overflow-y-scroll w-full max-w-[90ch] mx-auto ${mainContentTransitionClass}`}
           >
             <div className="flex items-center h-[37px] bg-base-100 drag">
               <div className="pl-[73px] pr-[10px] flex items-center h-[37px] bg-base-100 drag " />

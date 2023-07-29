@@ -9,7 +9,7 @@ import { debounce } from "lodash";
 import { RootState } from "../store";
 import { Note } from "electron/preload/api/typeorm/entity/Note";
 
-const API = api.API;
+export const API = api.API;
 
 const titleFromContent = (content: string) => {
   const firstLine = content.split("\n")[0];

@@ -2,20 +2,12 @@ import { Editor, ReactRenderer } from "@tiptap/react";
 import { SuggestionOptions } from "@tiptap/suggestion";
 import tippy from "tippy.js";
 import TagList from "./tagList";
-import { Tag } from "knex/types/tables";
+import { Tag } from "electron/preload/api/typeorm/entity/Tag";
+import { API } from "@/redux/slices/noteSlice";
 
 const suggestion: Omit<SuggestionOptions<Tag>, "editor"> = {
-  items: (props: { query: string }) => {
-    return [
-      {
-        id: "1",
-        name: "vision",
-      },
-      {
-        id: "2",
-        name: "ai",
-      },
-    ];
+  items: async (props: { query: string }) => {
+    return await API.searchTags(props.query);
   },
 
   render: () => {

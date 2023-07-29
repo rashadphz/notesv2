@@ -8,6 +8,7 @@ import {
   textblockTypeInputRule,
 } from "@tiptap/react";
 import Suggestion, { SuggestionOptions } from "@tiptap/suggestion";
+import { Tag } from "electron/preload/api/typeorm/entity/Tag";
 import { MarkdownNodeSpec } from "tiptap-markdown";
 
 export type TagOptions = {
