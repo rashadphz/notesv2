@@ -40,7 +40,7 @@ function App() {
   const sideBarTransitionClass = clsx({
     "transition-all duration-300 z-10 max-w-[400px]": true,
     "w-0": !sidebarVisible,
-    "w-[200px]": sidebarVisible,
+    "w-[300px]": sidebarVisible,
   });
 
   const mainContentTransitionClass = clsx({
