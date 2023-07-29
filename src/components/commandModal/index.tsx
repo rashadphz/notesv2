@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Combobox, Dialog, Transition } from "@headlessui/react";
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import {
@@ -6,6 +6,11 @@ import {
   FolderIcon,
   LifebuoyIcon,
 } from "@heroicons/react/24/outline";
+import {
+  handleClose,
+  handleOpen,
+} from "@/redux/slices/commandModalSlice";
+import { useReduxDispatch, useReduxSelector } from "@/redux/hooks";
 
 const projects = [
   {
@@ -33,9 +38,24 @@ function classNames(...classes: any[]) {
 }
 
 const CommandModal = () => {
-  const [open, setOpen] = useState(true);
   const [rawQuery, setRawQuery] = useState("");
   const query = rawQuery.toLowerCase().replace(/^[#>]/, "");
+
+  const open = useReduxSelector((state) => state.commandModal.open);
+  const dispatch = useReduxDispatch();
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!(e.metaKey && e.key === "k")) return;
+
+      if (open) dispatch(handleClose());
+      else dispatch(handleOpen());
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [open]);
 
   const filteredProjects =
     rawQuery === "#"
@@ -62,7 +82,11 @@ const CommandModal = () => {
       afterLeave={() => setRawQuery("")}
       appear
     >
-      <Dialog as="div" className="relative z-10" onClose={setOpen}>
+      <Dialog
+        as="div"
+        className="relative z-10"
+        onClose={() => dispatch(handleClose())}
+      >
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"

@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { noteSlice } from "./slices/noteSlice";
+import { commandModalSlice } from "./slices/commandModalSlice";
 
 export const store = configureStore({
   reducer: {
     [noteSlice.name]: noteSlice.reducer,
+    [commandModalSlice.name]: commandModalSlice.reducer,
   },
   devTools: true,
 });
