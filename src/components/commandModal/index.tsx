@@ -13,7 +13,7 @@ import {
 import { useReduxDispatch, useReduxSelector } from "@/redux/hooks";
 import { useTheme } from "@/theme/useTheme";
 import { cn } from "@/utils";
-import { API } from "@/redux/slices/noteSlice";
+import { API, selectNote } from "@/redux/slices/noteSlice";
 import { Note } from "electron/preload/api/typeorm/entity/Note";
 
 const projects = [
@@ -40,6 +40,7 @@ const users = [
 const CommandModal = () => {
   const { theme } = useTheme();
   const [rawQuery, setRawQuery] = useState("");
+  const [notes, setNotes] = useState<Note[]>([]);
   const query = rawQuery.toLowerCase().replace(/^[#>]/, "");
 
   const open = useReduxSelector((state) => state.commandModal.open);
@@ -58,7 +59,11 @@ const CommandModal = () => {
     };
   }, [open]);
 
-  const [notes, setNotes] = useState<Note[]>([]);
+  const onSelectNote = (note: Note) => {
+    dispatch(selectNote({ id: note.id }));
+    dispatch(handleClose());
+  };
+
   useEffect(() => {
     API.searchNotes(rawQuery).then((notes) => {
       setNotes(notes);
@@ -92,7 +97,7 @@ const CommandModal = () => {
           enter="ease-out duration-300"
           enterFrom="opacity-0"
           enterTo="opacity-100"
-          leave="ease-in duration-200"
+          leave="ease-in duration-50"
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
@@ -110,9 +115,7 @@ const CommandModal = () => {
             leaveTo="opacity-0 scale-95"
           >
             <Dialog.Panel className="mx-auto max-w-xl transform divide-y divide-base-300 overflow-hidden rounded-xl bg-base-100 shadow-2xl ring-1 ring-black ring-opacity-5 transition-all">
-              <Combobox
-                onChange={(item: any) => (window.location = item.url)}
-              >
+              <Combobox onChange={onSelectNote}>
                 <div className="relative">
                   <MagnifyingGlassIcon
                     className="pointer-events-none absolute left-4 top-3.5 h-5 w-5 opacity-50"
