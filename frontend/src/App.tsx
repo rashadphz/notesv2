@@ -72,11 +72,10 @@ function App() {
           </div>
 
           <div
-            className={`h-screen overflow-y-scroll w-full max-w-[90ch] mx-auto ${mainContentTransitionClass}`}
+            className={`h-screen overflow-y-scroll w-full ${mainContentTransitionClass}`}
           >
             <div className="flex items-center h-[37px] bg-base-100 drag">
               <div className="pl-[73px] pr-[10px] flex items-center h-[37px] bg-base-100 drag " />
-
               {!sidebarVisible && (
                 <OpenSidebarButton
                   onClick={() => setSidebarVisible(true)}
@@ -84,9 +83,11 @@ function App() {
               )}
             </div>
 
-            <NotesEditor />
+            <div className="h-full overflow-y-scroll max-w-[90ch] mx-auto">
+              <NotesEditor />
+            </div>
             <div className="w-full relative ">
-              <div className="absolute mx-auto bottom-[1.5rem] left-0 right-0 w-[360px]">
+              <div className="absolute mx-auto bottom-[4.5rem] left-0 right-0 w-[360px]">
                 <FloatingMenuBar />
               </div>
             </div>
