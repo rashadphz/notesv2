@@ -22,10 +22,10 @@
       "@/*": ["src/*"]
     }
   },
-  "files": ["electron/index.d.ts"],
+  "files": ["electronny/index.d.ts"],
   "include": [
     "src",
-    "electron",
+    "electronny",
     "tailwind.config.js",
     "postcss.config.js"
   ],
