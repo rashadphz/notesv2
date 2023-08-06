@@ -23,6 +23,16 @@ export class Note {
   @Column("varchar")
   content!: string;
 
+  @Column({
+    transformer: {
+      from: (date: Date) => moment(date).valueOf(),
+      to: () => new Date(),
+    },
+    type: "datetime",
+    nullable: true,
+  })
+  lastIndexedAt!: number;
+
   @CreateDateColumn({
     transformer: {
       from: (date: Date) => moment(date).valueOf(),

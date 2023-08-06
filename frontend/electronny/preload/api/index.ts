@@ -20,6 +20,8 @@ const API = {
     noteServ.update(id, updates),
   searchNotes: async (query: string) => noteServ.searchNotes(query),
   searchTags: async (query: string) => noteServ.searchTags(query),
+  indexNote: async (id: string) => noteServ.indexNote(id),
+  smartSearch: async (query: string) => noteServ.smartSearch(query),
 };
 
 export default { API };

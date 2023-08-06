@@ -4,6 +4,7 @@ import { Note } from "../typeorm/entity/Note";
 import DatabaseService from "./DatabaseService";
 import { DeepPartial, In, Repository, Like } from "typeorm";
 import { Tag } from "../typeorm/entity/Tag";
+import { EmbeddingsService, SearchService } from "../client-gen";
 
 export interface NoteService {
   findAll(): Promise<Note[]>;
@@ -11,6 +12,8 @@ export interface NoteService {
   update(id: string, updates: DeepPartial<Note>): Promise<Note>;
   searchTags(query: string): Promise<Tag[]>;
   searchNotes(query: string): Promise<Note[]>;
+  indexNote: (id: string) => void;
+  smartSearch(query: string): Promise<Note[]>;
 }
 
 @injectable()
@@ -106,5 +109,36 @@ export default class NoteServiceImpl implements NoteService {
       ],
     });
     return notes;
+  }
+
+  async indexNote(id: string) {
+    const note = await this.noteRepo.findOneBy({ id });
+    if (!note) return;
+
+    if (note.lastIndexedAt) {
+      if (note.updatedAt < note.lastIndexedAt) {
+        return;
+      }
+
+      const now = new Date().getTime();
+      const diff = now - note.lastIndexedAt;
+      if (diff < 1000 * 60 * 5) {
+        return;
+      }
+    }
+
+    EmbeddingsService.createEmbeddings({
+      content: note.content,
+      note_id: note.id,
+    }).then(() => {
+      console.log("indexed note", note.id);
+      note.lastIndexedAt = new Date().getTime();
+      this.noteRepo.save(note);
+    });
+  }
+
+  async smartSearch(query: string): Promise<Note[]> {
+    const { note_ids } = await SearchService.searchNotes(query);
+    return this.noteRepo.findBy({ id: In(note_ids) });
   }
 }
