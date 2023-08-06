@@ -11,6 +11,7 @@ supabase = "^1.0.3"
 fastapi = "^0.100.1"
 psycopg2 = "^2.9.6"
 alembic = "^1.11.1"
+pgvector = "^0.2.1"
 
 
 [build-system]
