@@ -5,6 +5,7 @@ import {
   DocumentIcon,
   ExclamationTriangleIcon,
   LifebuoyIcon,
+  SparklesIcon,
 } from "@heroicons/react/24/outline";
 import {
   handleClose,
@@ -14,7 +15,7 @@ import { useReduxDispatch, useReduxSelector } from "@/redux/hooks";
 import { useTheme } from "@/theme/useTheme";
 import { cn } from "@/utils";
 import { API, selectNote } from "@/redux/slices/noteSlice";
-import { Note } from "electron/preload/api/typeorm/entity/Note";
+import { Note } from "electronny/preload/api/typeorm/entity/Note";
 
 const CommandModal = () => {
   const { theme } = useTheme();
@@ -108,7 +109,7 @@ const CommandModal = () => {
                     {notes.length > 0 && (
                       <li>
                         <h2 className="text-xs font-semibold text-base-content">
-                          Recents
+                          Results
                         </h2>
                         <ul className="-mx-4 mt-2 text-md text-base-content text-opacity-90">
                           {notes.map((note) => (
@@ -140,6 +141,46 @@ const CommandModal = () => {
                         </ul>
                       </li>
                     )}
+                  </Combobox.Options>
+                )}
+
+                {rawQuery && (
+                  <Combobox.Options
+                    static
+                    className="max-h-80 scroll-py-10 scroll-pb-2 space-y-4 overflow-y-auto p-4 pb-2"
+                  >
+                    <li>
+                      <h2 className="text-xs font-semibold text-base-content">
+                        Tools
+                      </h2>
+                      <ul className="-mx-4 mt-2 text-md text-base-content text-opacity-90">
+                        <Combobox.Option
+                          value={"ok"}
+                          className={({ active }) =>
+                            cn(
+                              "flex cursor-default select-none items-center px-4 py-1",
+                              active && "bg-base-300"
+                            )
+                          }
+                        >
+                          <>
+                            <SparklesIcon
+                              className={cn("h-5 w-5 flex-none")}
+                              aria-hidden="true"
+                            />
+                            <div>
+                              <span className="ml-2 flex-auto truncate">
+                                <span>{rawQuery}</span>
+                                <span className="opacity-50">
+                                  {" "}
+                                  - Search
+                                </span>
+                              </span>
+                            </div>
+                          </>
+                        </Combobox.Option>
+                      </ul>
+                    </li>
                   </Combobox.Options>
                 )}
 
