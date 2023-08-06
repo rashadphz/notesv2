@@ -78,14 +78,17 @@ const SearchView = () => {
                   }
                 >
                   <>
-                    <SparklesIcon
+                    <MagnifyingGlassIcon
                       className={cn("h-5 w-5 flex-none")}
                       aria-hidden="true"
                     />
                     <div>
                       <span className="ml-2 flex-auto truncate">
-                        <span>{rawQuery}</span>
-                        <span className="opacity-50"> - Search</span>
+                        <span className="font-bold">{rawQuery}</span>
+                        <span className="opacity-60">
+                          {" "}
+                          - Search Notes{" "}
+                        </span>
                       </span>
                     </div>
                   </>
@@ -115,6 +118,35 @@ const SearchView = () => {
                   )}
                 </Combobox.Option>
               ))}
+            </ul>
+            <h2 className="pt-3 text-xs font-semibold text-base-content">
+              Tools
+            </h2>
+            <ul className="-mx-4 mt-2 text-md text-base-content text-opacity-90">
+              {rawQuery && (
+                <Combobox.Option
+                  value={query}
+                  className={({ active }) =>
+                    cn(
+                      "flex cursor-default select-none items-center px-4 py-1",
+                      active && "bg-base-300"
+                    )
+                  }
+                >
+                  <>
+                    <SparklesIcon
+                      className={cn("h-5 w-5 flex-none")}
+                      aria-hidden="true"
+                    />
+                    <div>
+                      <span className="ml-2 flex-auto truncate">
+                        <span>Ask AI: </span>
+                        <span className="font-bold">{rawQuery}</span>
+                      </span>
+                    </div>
+                  </>
+                </Combobox.Option>
+              )}
             </ul>
           </li>
         </Combobox.Options>

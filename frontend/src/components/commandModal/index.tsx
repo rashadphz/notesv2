@@ -76,7 +76,7 @@ const CommandModal = () => {
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
           >
-            <Dialog.Panel className="mx-auto max-w-xl transform overflow-hidden rounded-xl bg-base-100 shadow-2xl ring-1 ring-black ring-opacity-5 transition-all">
+            <Dialog.Panel className="mx-auto max-w-3xl transform overflow-hidden rounded-xl bg-base-100 shadow-2xl ring-1 ring-black ring-opacity-5 transition-all">
               {viewType === ViewType.SEARCH ? (
                 <SearchView />
               ) : viewType === ViewType.SEARCH_RESULTS ? (
